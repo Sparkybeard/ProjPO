@@ -24,7 +24,7 @@ public class DoOpen extends Command<SchoolManager> {
     super(Label.OPEN, receiver);
     //FIXME initialize input fields if needed
   }
-
+ //hello test
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() throws DialogException {
