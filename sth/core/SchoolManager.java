@@ -3,30 +3,34 @@ package sth.core;
 import sth.core.exception.BadEntryException;
 import sth.core.exception.ImportFileException;
 import sth.core.exception.NoSuchPersonIdException;
-import sth.core.School;
+
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
-
-//FIXME import other classes if needed
 
 /**
  * The façade class.
  */
 public class SchoolManager {
 
-  //FIXME add object attributes if needed
-  private School _school = new School();
-  //FIXME implement constructors if needed
+  private School _school;
+  private Person _loggedUser;
+
+
+  public SchoolManager(String _schoolName) {
+    _school = new School(_schoolName);
+  }
+
   
   /**
-   * @param datafile
-   * @throws ImportFileException
+   * @param datafile name of the file to import from
+   * @throws ImportFileException problem with reading from the file
    * @throws InvalidCourseSelectionException
    */
   public void importFile(String datafile) throws ImportFileException {
     try {
       _school.importFile(datafile);
+
     } catch (IOException | BadEntryException e) {
       throw new ImportFileException(e);
     }
@@ -36,11 +40,17 @@ public class SchoolManager {
    * Do the login of the user with the given identifier.
 
    * @param id identifier of the user to login
-   * @throws NoSuchPersonIdException if there is no uers with the given identifier
+   * @throws NoSuchPersonIdException if there are no users with the given identifier
    */
-  public void login(int id) throws NoSuchPersonIdException {
-    //FIXME implement method
+  public void login(int id) {
+    try{
+        _loggedUser =_school.getPerson(id);
+
+    }catch (NoSuchPersonIdException e){
+        System.out.println("Invalid ID" + e.getMessage());
+    }
   }
+
 
   /**
    * @return true when the currently logged in person is an administrative
@@ -49,29 +59,29 @@ public class SchoolManager {
     //FIXME implement predicate
   }
 
+
   /**
    * @return true when the currently logged in person is a professor
    */
-  public boolean isLoggedUserProfessor() {
-    //FIXME implement predicate
-  }
+  public boolean isLoggedUserProfessor() { return _loggedUser instanceof Teacher; }
+
 
   /**
    * @return true when the currently logged in person is a student
    */
   public boolean isLoggedUserStudent() {
-    //FIXME implement predicate
+    return _loggedUser instanceof Student;
   }
+
 
   /**
    * @return true when the currently logged in person is a representative
    */
   public boolean isLoggedUserRepresentative() {
-    //FIXME implement predicate
+    return _loggedUser instanceof Student && ((Student) _loggedUser).isRepresentative();
   }
+
 
   //FIXME implement other methods (in general, one for each command in sth-app)
-     public void saveSerializable(School ent) throws SaveFileException {
-
-  }
+  
 }

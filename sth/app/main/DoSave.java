@@ -17,7 +17,7 @@ public class DoSave extends Command<SchoolManager> {
   protected Input<String> _filename;
 
   //FIXME add input fields if needed
-
+  String _filename;
   /**
    * @param receiver
    */
