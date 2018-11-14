@@ -14,9 +14,9 @@ class Discipline {
     private Course _course;
 
 
-    Discipline(String name, int capacity, Course course) {
+    Discipline(String name, Course course) {
         _name = name;
-        _capacity = capacity;
+        _capacity = 100;
         _numberStudents = 0;
 
         _course = course;
@@ -30,6 +30,11 @@ class Discipline {
     }
 
 
+    void setCapacity(int capacity){
+        _capacity = capacity;
+    }
+
+
     Course getCourse() {
         return _course;
     }
@@ -37,17 +42,14 @@ class Discipline {
 
     void addTeacher(Teacher teacher) {
         _teacherList.add(teacher);
+        teacher.addDiscipline(this);
     }
 
 
-    boolean enrollStudent(Student student) {
-        if(_numberStudents + 1 > _capacity)
-           return false;
-
-        else {
+    void enrollStudent(Student student) {
+        if(_numberStudents + 1 <= _capacity){
             _studentList.add(student);
             _numberStudents++;
-            return true;
         }
     }
 }

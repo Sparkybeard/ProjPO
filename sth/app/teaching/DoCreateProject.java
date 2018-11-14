@@ -21,8 +21,11 @@ public class DoCreateProject extends sth.app.common.ProjectCommand {
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
-  public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    //FIXME implement command
+  public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException, DuplicateProjectException {
+   //chama o constructor do pai, e a funcao create project ao school manager
+   super.execute();
+   _receiver.doCreateProject();
+   //FIXME implement command
   }
 
 }

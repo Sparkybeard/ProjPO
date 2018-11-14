@@ -18,13 +18,16 @@ public class DoShowPerson extends Command<SchoolManager> {
    */
   public DoShowPerson(SchoolManager receiver) {
     super(Label.SHOW_PERSON, receiver);
+    _person = _form.getRegisteredPerson();
     //FIXME initialize input fields if needed
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() {
-    //FIXME implement command
+ 	_display.addLine(_receiver.showPerson(_person.value());
+	
+	  //FIXME implement command
   }
 
 }

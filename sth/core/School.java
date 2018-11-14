@@ -29,6 +29,7 @@ class School implements java.io.Serializable {
   private Map<Integer, Person> _peopleMap;
   private List<Course> _courseList;
 
+
   School(String name) {
       _name = name;
       _nextPersonId = 10000;
@@ -37,9 +38,16 @@ class School implements java.io.Serializable {
       _courseList = new ArrayList<>();
   }
 
+
   String getName() {
-      return _name
+      return _name;
   }
+
+
+  int getNextPersonId(){
+      return _nextPersonId;
+  }
+
 
   Person getPerson(int id) throws NoSuchPersonIdException {
       if(_peopleMap.containsKey(id))
@@ -48,17 +56,11 @@ class School implements java.io.Serializable {
       else throw new NoSuchPersonIdException(id);
   }
 
-  boolean addPerson(Person person) {
-      if(_peopleMap.containsKey(person.get_id()))
-          return false;
 
-      else {
-          int id = person.get_id();
-          _peopleMap.put(id, person);
-
-          return true;
-      }
+  void addPerson(Person person) {
+      _peopleMap.put(person.get_id(), person);
   }
+
 
   boolean addCourse(Course course) {
       if(_courseList.contains(course))
@@ -70,6 +72,26 @@ class School implements java.io.Serializable {
           return true;
       }
   }
+
+
+  Course parseCourse(String courseName){
+      Iterator<Course> iter = _courseList.iterator();
+      Course c;
+
+      /* Check if course already exists */
+      while(iter.hasNext()){
+          c = iter.next();
+
+          if(c.getName().equals(courseName))
+              return c;
+      }
+
+      /* If there isn't, create one */
+      c = new Course(courseName);
+      _courseList.add(c);
+      return c;
+  }
+
 
   List getAllUsers() {
       List<Person> userList = new ArrayList<>();
@@ -85,11 +107,12 @@ class School implements java.io.Serializable {
 
 
   /**
-   * @param filename name of file to import from
+   * @param filename Contains school information to import
    * @throws BadEntryException Exception for unknown import file entries.
    * @throws IOException
    */
   void importFile(String filename) throws IOException, BadEntryException {
-    //FIXME implement text file reader
+    Parser parser = new Parser(this);
+    parser.parseFile(filename);
   }
 }

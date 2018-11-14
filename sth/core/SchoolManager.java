@@ -23,10 +23,10 @@ public class SchoolManager {
 
   
   /**
-   * @param datafile name of the file to import from
+   * @param datafile Contains school information to import
    * @throws ImportFileException problem with reading from the file
-   * @throws InvalidCourseSelectionException
    */
+  /* @throws InvalidCourseSelectionException */
   public void importFile(String datafile) throws ImportFileException {
     try {
       _school.importFile(datafile);
@@ -36,29 +36,25 @@ public class SchoolManager {
     }
   }
 
+
   /**
    * Do the login of the user with the given identifier.
 
    * @param id identifier of the user to login
    * @throws NoSuchPersonIdException if there are no users with the given identifier
    */
-  public void login(int id) {
-    try{
-        _loggedUser =_school.getPerson(id);
-
-    }catch (NoSuchPersonIdException e){
-        System.out.println("Invalid ID" + e.getMessage());
-    }
+  public void login(int id) throws NoSuchPersonIdException{
+    _loggedUser =_school.getPerson(id);
   }
 
 
-  /**
+  /*
    * @return true when the currently logged in person is an administrative
    */
-  public boolean isLoggedUserAdministrative() {
+  /*public boolean isLoggedUserAdministrative() {
     //FIXME implement predicate
   }
-
+  */
 
   /**
    * @return true when the currently logged in person is a professor
@@ -82,6 +78,8 @@ public class SchoolManager {
   }
 
 
-  //FIXME implement other methods (in general, one for each command in sth-app)
-  
+  public boolean changePhoneNumber(int phoneNumber){
+      _loggedUser.changePhoneNumber(phoneNumber);
+      return true;
+  }
 }
