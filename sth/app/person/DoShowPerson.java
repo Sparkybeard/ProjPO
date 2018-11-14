@@ -12,7 +12,7 @@ import sth.core.SchoolManager;
 public class DoShowPerson extends Command<SchoolManager> {
 
   //FIXME add input fields if needed
-
+	private String _person;
   /**
    * @param receiver
    */
@@ -25,7 +25,8 @@ public class DoShowPerson extends Command<SchoolManager> {
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() {
- 	_display.addLine(_receiver.showPerson(_person.value());
+//mostra a pessoa registada no formato serialized
+	  _display.addLine(_receiver.showPerson(_person.value());
 	
 	  //FIXME implement command
   }
