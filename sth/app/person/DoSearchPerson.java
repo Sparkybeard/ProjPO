@@ -18,7 +18,7 @@ public class DoSearchPerson extends Command<SchoolManager> {
    */
   public DoSearchPerson(SchoolManager receiver) {
     super(Label.SEARCH_PERSON, receiver);
-	_person = _form.addStringInput("Introduza o nome da pessoa a procurar: ");
+  	_person = _form.addStringInput("Introduza o nome da pessoa a procurar: ");
     //FIXME initialize input fields if needed
   }
 
@@ -28,9 +28,9 @@ public class DoSearchPerson extends Command<SchoolManager> {
   public final void execute() {
     //FIXME implement command
     _form.parse();
-   try {   
-	_display.addLine(_receiver.ShowPerson(_person.value())); 
-   } catch (NoSuchPersonException e) {
-	e.getMessage();
-   }
-
+    try {   
+	    _display.addLine(_receiver.ShowPerson(_person.value())); 
+    } catch (NoSuchPersonException e) {
+	    e.getMessage();
+    }
+  }

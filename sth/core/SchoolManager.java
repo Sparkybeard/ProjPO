@@ -79,7 +79,30 @@ public class SchoolManager {
 
 
   public boolean changePhoneNumber(int phoneNumber){
-      _loggedUser.changePhoneNumber(phoneNumber);
-      return true;
+    _loggedUser.changePhoneNumber(phoneNumber);
+    return true;
+  }
+  
+  // Gets every registered user on object _school and returns it on a List format
+  public  List<Person> getAllUsers() {
+    private List<Person> aux;
+    aux = _school.getAllUsers();
+    return aux;
+  }
+  
+  public Person getLoggedUser() {
+    
+    return _school.getUser(_loggedUser.getID());
   }
 }
+
+
+
+
+
+
+
+
+
+
+
