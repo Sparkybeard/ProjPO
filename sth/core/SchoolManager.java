@@ -94,6 +94,13 @@ public class SchoolManager {
     
     return _school.getUser(_loggedUser.getID());
   }
+  
+  public boolean isDisciplineValid(String discipline) {
+    return _school.isDisciplineValid(discipline);
+  }
+  
+  public getDisciplineStudents(String discipline) {
+    return _school.disciplineStudents(discipline);
 }
 
 
