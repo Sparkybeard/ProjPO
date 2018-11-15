@@ -26,7 +26,7 @@ class Course {
     }
 
     public String toString(){
-        return "# " + _name + " | ";
+        return "* " + _name;
     }
 
 

@@ -100,20 +100,14 @@ public class SchoolManager {
 
 
   public int getLoggedUser() {
-    return _loggedUser.showPerson(_loggedUser.getId());
+    return _loggedUser.getId();
   }
 
 
-  public List<String> getDisciplineStudents(String discipline) throws NoSuchDisciplineIdException {
-      List<Student> list = ((Teacher) _loggedUser).getDisciplineStudents(discipline);
-      List<String> studentList = new ArrayList<>();
-      Iterator<Student> iter = list.iterator();
+  public List<String> getDisciplineStudents(String discipline)
+          throws NoSuchDisciplineIdException {
 
-      while (iter.hasNext()){
-          studentList.add(iter.next().toString());
-      }
-
-      return studentList;
+      return _school.getDisciplineStudents(discipline, _loggedUser.getId());
   }
 
 
@@ -127,17 +121,27 @@ public class SchoolManager {
   }
 
 
-  public String showPerson(int id){
-    return _school.showPerson(id);
+  public String showPerson(){
+      return _school.showPerson(_loggedUser.getId());
   }
+
+
+  public List<String> searchPerson(String personName){
+    return _school.searchPerson(personName);
+  }
+
   
-  public void doCloseProject(String _projectName) throws NoSuchProjectIdException {
-    _school.closeProject(_projectName);
+  public void doCloseProject(String _projectName, String disciplineName)
+          throws NoSuchProjectIdException, NoSuchDisciplineIdException{
+
+      _school.closeProject(_projectName, disciplineName, _loggedUser.getId());
   }
 
-  public void doCreateProject() {
-    _school.createProject();
-  }
 
+  public boolean doCreateProject(String projName, String disciplineName)
+          throws NoSuchDisciplineIdException{
+
+      return _school.createProject(projName, disciplineName, _loggedUser.getId());
+  }
 }
 

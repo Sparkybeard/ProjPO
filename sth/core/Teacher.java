@@ -1,6 +1,8 @@
 package sth.core;
 
 import sth.core.exception.BadEntryException;
+import sth.core.exception.NoSuchDisciplineIdException;
+import sth.core.exception.NoSuchProjectIdException;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -108,23 +110,57 @@ class Teacher extends Person {
     }
 
 
-    Discipline getDiscipline(String name){
+    Discipline getDiscipline(String disciplineName) throws NoSuchDisciplineIdException{
         Iterator<Discipline> iter = _disciplines.iterator();
         Discipline d;
 
         while (iter.hasNext()) {
             d = iter.next();
 
-            if(d.getName().equals(name))
+            if(d.getName().equals(disciplineName))
                 return d;
         }
 
-        return null;
+        throw new NoSuchDisciplineIdException(disciplineName);
     }
 
 
-    List<Student> getDisciplineStudents(String name){
-        Discipline d = this.getDiscipline(name);
+    List<Student> getDisciplineStudents(String disciplineName) throws NoSuchDisciplineIdException {
+        Discipline d = getDiscipline(disciplineName);
         return d.getStudentList();
+    }
+
+
+    void closeProject(String projectName, String disciplineName)
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
+
+        Iterator<Discipline> iterator = _disciplines.iterator();
+        Discipline discipline;
+
+        while(iterator.hasNext()){
+            discipline = iterator.next();
+
+            if(discipline.getName().equals(disciplineName))
+                discipline.closeProject(projectName);
+        }
+
+        throw new NoSuchDisciplineIdException(disciplineName);
+    }
+
+
+    boolean createProject(String projectName, String disciplineName)
+            throws NoSuchDisciplineIdException {
+
+        Iterator<Discipline> iterator = _disciplines.iterator();
+        Discipline discipline;
+
+        while(iterator.hasNext()){
+            discipline = iterator.next();
+
+            if(discipline.getName().equals(disciplineName))
+                return discipline.createProject(projectName);
+        }
+
+        throw new NoSuchDisciplineIdException(disciplineName);
     }
 }

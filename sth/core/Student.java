@@ -56,7 +56,7 @@ class Student extends Person {
         StringBuilder studentInformation = new StringBuilder(studentString + "\n");
 
         DisciplineComparator dc = new DisciplineComparator();
-
+        _disciplines.sort(dc);
 
         Iterator<Discipline> iterator = _disciplines.iterator();
 
@@ -73,8 +73,7 @@ class Student extends Person {
 
 
     List<Discipline> getDisciplines() {
-        List<Discipline> listCopy = new ArrayList<>(_disciplines);
-        return listCopy;
+        return _disciplines;
     }
 
 

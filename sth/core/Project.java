@@ -12,6 +12,13 @@ public class Project {
     }
 
 
+    Project(String name, String discription){
+        _name = name;
+        _closed = false;
+        _discription = discription;
+    }
+
+
     public String getName() {
         return _name;
     }

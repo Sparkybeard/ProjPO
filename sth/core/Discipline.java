@@ -1,6 +1,9 @@
 package sth.core;
 
+import sth.core.exception.NoSuchProjectIdException;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 class Discipline {
@@ -11,6 +14,7 @@ class Discipline {
 
     private List<Student> _studentList;
     private List<Teacher> _teacherList;
+    private List<Project> _projectList;
     private Course _course;
 
 
@@ -54,7 +58,44 @@ class Discipline {
     }
 
     List<Student> getStudentList(){
-        List<Student> listCopy = new ArrayList<>(_studentList);
-        return listCopy;
+        return _studentList;
+    }
+
+
+    void closeProject(String projectName) throws NoSuchProjectIdException {
+        Iterator<Project> iterator = _projectList.iterator();
+        Project project;
+
+        while(iterator.hasNext()){
+            project = iterator.next();
+
+            if(project.getName().equals(projectName)){
+                project.close();
+                return;
+            }
+        }
+
+        throw new NoSuchProjectIdException(projectName);
+    }
+
+    /**
+     *
+     * @param projectName name of the project to create
+     * @return false if project already exists. True otherwise
+     */
+    boolean createProject(String projectName) {
+        Iterator<Project> iterator = _projectList.iterator();
+        Project project;
+
+        while (iterator.hasNext()) {
+            project = iterator.next();
+
+            if (project.getName().equals(projectName))
+                return false;
+        }
+
+        project = new Project(projectName);
+        _projectList.add(project);
+        return true;
     }
 }
