@@ -1,5 +1,9 @@
 package sth.core;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
+
 import sth.core.exception.BadEntryException;
 import sth.core.exception.ImportFileException;
 import sth.core.exception.NoSuchPersonIdException;
@@ -21,7 +25,7 @@ public class SchoolManager {
     _school = new School(_schoolName);
   }
 
-  
+
   /**
    * @param datafile Contains school information to import
    * @throws ImportFileException problem with reading from the file
@@ -39,12 +43,12 @@ public class SchoolManager {
 
   /**
    * Do the login of the user with the given identifier.
-
+   *
    * @param id identifier of the user to login
    * @throws NoSuchPersonIdException if there are no users with the given identifier
    */
-  public void login(int id) throws NoSuchPersonIdException{
-    _loggedUser =_school.getPerson(id);
+  public void login(int id) throws NoSuchPersonIdException {
+    _loggedUser = _school.getPerson(id);
   }
 
 
@@ -59,7 +63,9 @@ public class SchoolManager {
   /**
    * @return true when the currently logged in person is a professor
    */
-  public boolean isLoggedUserProfessor() { return _loggedUser instanceof Teacher; }
+  public boolean isLoggedUserProfessor() {
+    return _loggedUser instanceof Teacher;
+  }
 
 
   /**
@@ -78,33 +84,48 @@ public class SchoolManager {
   }
 
 
-  public boolean changePhoneNumber(int phoneNumber){
+  public boolean changePhoneNumber(int phoneNumber) {
     _loggedUser.changePhoneNumber(phoneNumber);
     return true;
   }
-  
-  // Gets every registered user on object _school and returns it on a List format
-  public  List<Person> getAllUsers() {
-    private List<Person> aux;
-    aux = _school.getAllUsers();
+
+
+  /* Gets every registered user on object _school and returns it on a List format */
+  public List<Person> getAllUsers() {
+    List<Person> aux;
+    aux = new ArrayList<>(_school.getAllUsers());
+
     return aux;
   }
-  
-  public Person getLoggedUser() {
-    
-    return _school.getUser(_loggedUser.getID());
+
+
+  public int getLoggedUser() {
+    return _loggedUser.getId();
   }
-  
-  public boolean isDisciplineValid(String discipline) {
-    return _school.isDisciplineValid(discipline);
+
+
+  public List<String> getDisciplineStudents(String discipline) {
+      List<Student> list = ((Teacher) _loggedUser).getDisciplineStudents(discipline);
+      List<String> studentList = new ArrayList<>();
+      Iterator<Student> iter = list.iterator();
+
+      while (iter.hasNext()){
+          studentList.add(iter.next().toString());
+      }
+
+      return studentList;
   }
-  
-  public getDisciplineStudents(String discipline) {
-    return _school.disciplineStudents(discipline);
+
+
+  public void saveSerializable(String filename) throws ImportFileException{
+      try{
+          _school.saveSerialiazable(filename);
+
+      }catch (IOException ioe){
+          throw new ImportFileException();
+      }
+  }
 }
-
-
-
 
 
 

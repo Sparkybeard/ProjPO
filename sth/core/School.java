@@ -1,6 +1,8 @@
 package sth.core;
 
 /* Collections Import */
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -16,7 +18,9 @@ import sth.core.exception.NoSuchPersonIdException;
 import java.io.IOException;
 
 /**
- * School implementation.
+ * Represents the school of the program
+ * Contains all the people in the school
+ * Contains all the courses in the school
  */
 class School implements java.io.Serializable {
 
@@ -49,6 +53,12 @@ class School implements java.io.Serializable {
   }
 
 
+    /**
+     *
+     * @param id id of the person to get
+     * @return the Person object with the given id
+     * @throws NoSuchPersonIdException No one with the given id found
+     */
   Person getPerson(int id) throws NoSuchPersonIdException {
       if(_peopleMap.containsKey(id))
           return _peopleMap.get(id);
@@ -57,11 +67,40 @@ class School implements java.io.Serializable {
   }
 
 
+    /**
+     *
+     * @param person to add to the collection of people
+     */
   void addPerson(Person person) {
-      _peopleMap.put(person.get_id(), person);
+      _peopleMap.put(person.getId(), person);
   }
 
 
+    /**
+     *
+     * @param name of the course
+     * @return Course object with the given name
+     */
+  Course getCourse(String name){
+      Iterator<Course> iter = _courseList.iterator();
+      Course c;
+
+      while(iter.hasNext()){
+          c = iter.next();
+
+          if(c.getName().equals(name))
+              return c;
+      }
+
+      return null;
+  }
+
+
+    /**
+     *
+     * @param course to add to the collection of courses
+     * @return false if course already in. True otherwise
+     */
   boolean addCourse(Course course) {
       if(_courseList.contains(course))
           return false;
@@ -74,17 +113,20 @@ class School implements java.io.Serializable {
   }
 
 
+    /**
+     * Returns the course with the given name if already in
+     * Creates one and returns if otherwise
+     *
+     * @param courseName name of the course to add/find
+     * @return Course object of the given name
+     */
   Course parseCourse(String courseName){
-      Iterator<Course> iter = _courseList.iterator();
       Course c;
+      c = this.getCourse(courseName);
 
       /* Check if course already exists */
-      while(iter.hasNext()){
-          c = iter.next();
-
-          if(c.getName().equals(courseName))
-              return c;
-      }
+      if(c != null)
+          return c;
 
       /* If there isn't, create one */
       c = new Course(courseName);
@@ -93,7 +135,11 @@ class School implements java.io.Serializable {
   }
 
 
-  List getAllUsers() {
+    /**
+     *
+     * @return list of all people in the school
+     */
+  List<Person> getAllUsers() {
       List<Person> userList = new ArrayList<>();
       Set<Integer> idList = _peopleMap.keySet();
       Iterator<Integer> iter = idList.iterator();
@@ -114,5 +160,26 @@ class School implements java.io.Serializable {
   void importFile(String filename) throws IOException, BadEntryException {
     Parser parser = new Parser(this);
     parser.parseFile(filename);
+  }
+
+
+    /**
+     * Saves in the object information in a file
+     *
+     * @param filename to save the information
+     */
+  void saveSerialiazable(String filename) throws IOException{
+      ObjectOutputStream obOut = null;
+
+      try{
+          FileOutputStream fpout = new FileOutputStream(filename);
+          obOut = new ObjectOutputStream(fpout);
+          obOut.writeObject(this);
+
+      }finally {
+          if(obOut != null) {
+              obOut.close();
+          }
+      }
   }
 }

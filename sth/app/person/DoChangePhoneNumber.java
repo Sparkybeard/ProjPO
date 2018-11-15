@@ -31,7 +31,7 @@ public class DoChangePhoneNumber extends Command<SchoolManager> {
 
 
 	//caso haja excepções por na condição
-    if(_receiver.changePhoneNumber(_phonenumber.value()) {
+    if(_receiver.changePhoneNumber(_phonenumber.value())) {
 	    _display.addLine("Número de telemovel mudado");
     } else {
 	_display.addLine("Falha ao mudar o nr de telemovel");

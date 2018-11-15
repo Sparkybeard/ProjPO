@@ -26,7 +26,7 @@ abstract class Person {
     }
 
 
-    int get_id() {
+    int getId() {
         return _id;
     }
 

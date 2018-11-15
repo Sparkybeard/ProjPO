@@ -25,6 +25,10 @@ class Course {
         return _name;
     }
 
+    public String toString(){
+        return "# " + _name + " | ";
+    }
+
 
     boolean addStudent(Student student) {
         if(student.isRepresentative() && _numberRepresentatives < 7){
@@ -48,7 +52,7 @@ class Course {
 
 
     List getDisciplines() {
-        List listCopy = new ArrayList<Discipline>(_disciplineList);
+        List listCopy = new ArrayList<>(_disciplineList);
         return listCopy;
     }
 

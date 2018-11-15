@@ -46,6 +46,12 @@ class Student extends Person {
     }
 
 
+    List<Discipline> getDisciplines() {
+        List<Discipline> listCopy = new ArrayList<>(_disciplines);
+        return listCopy;
+    }
+
+
     void setCourse(Course course) {
         _course = course;
         _disciplines.clear();

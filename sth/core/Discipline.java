@@ -52,4 +52,9 @@ class Discipline {
             _numberStudents++;
         }
     }
+
+    List<Student> getStudentList(){
+        List<Student> listCopy = new ArrayList<>(_studentList);
+        return listCopy;
+    }
 }
