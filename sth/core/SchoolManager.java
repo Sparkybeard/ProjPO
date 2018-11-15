@@ -84,15 +84,15 @@ public class SchoolManager {
   }
 
 
-  public boolean changePhoneNumber(int phoneNumber) {
+  public String changePhoneNumber(int phoneNumber) {
     _loggedUser.changePhoneNumber(phoneNumber);
-    return true;
+    return _loggedUser.getInformation();
   }
 
 
-  /* Gets every registered user on object _school and returns it on a List format */
+  /* List of strings with every user's information */
   public List<String> getAllUsers() {
-    _school.showAllPeople();
+    return _school.showAllPeople();
   }
 
 

@@ -191,6 +191,14 @@ class School implements java.io.Serializable {
 
 
   List<String> showAllPeople() {
+    List<String> allPeopleInformation = new ArrayList<>();
+    Set<Integer> idList = _peopleMap.keySet();
+    Iterator<Integer> iterator = idList.iterator();
 
+    while(iterator.hasNext()){
+        allPeopleInformation.add(_peopleMap.get(iterator.next()).getInformation());
+    }
+
+    return allPeopleInformation;
   }
 }
