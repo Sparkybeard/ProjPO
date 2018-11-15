@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import sth.core.exception.BadEntryException;
 import sth.core.exception.ImportFileException;
 import sth.core.exception.NoSuchPersonIdException;
-
+import sth.core.exception.NoSuchDisciplineIdException;
+import sth.core.exception.NoSuchProjectIdException;
+import sth.core.Person;
+import sth.core.School;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -97,11 +100,11 @@ public class SchoolManager {
 
 
   public int getLoggedUser() {
-    return _loggedUser.getId();
+    return _loggedUser.showPerson(_loggedUser.getId());
   }
 
 
-  public List<String> getDisciplineStudents(String discipline) {
+  public List<String> getDisciplineStudents(String discipline) throws NoSuchDisciplineIdException {
       List<Student> list = ((Teacher) _loggedUser).getDisciplineStudents(discipline);
       List<String> studentList = new ArrayList<>();
       Iterator<Student> iter = list.iterator();
@@ -127,12 +130,14 @@ public class SchoolManager {
   public String showPerson(int id){
     return _school.showPerson(id);
   }
+  
+  public void doCloseProject(String _projectName) throws NoSuchProjectIdException {
+    _school.closeProject(_projectName);
+  }
+
+  public void doCreateProject() {
+    _school.createProject();
+  }
+
 }
-
-
-
-
-
-
-
 

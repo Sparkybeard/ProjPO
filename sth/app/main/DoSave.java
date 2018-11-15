@@ -33,7 +33,7 @@ public class DoSave extends Command<SchoolManager> {
       _form.parse();
       try {
           _receiver.saveSerializable(_filename.value());
-          _display.addLine("Ficheiro guardado: ");
+          _display.addLine("Ficheiro guardado.");
 
       } catch (ImportFileException e) {
           _display.addLine("Impossível importar ficheiro.");

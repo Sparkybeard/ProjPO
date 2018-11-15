@@ -27,7 +27,7 @@ public class DoShowPerson extends Command<SchoolManager> {
   public final void execute() {
     //mostra a pessoa registada no formato serialized
     _form.parse();
-    _person = _receiver.
+    _person = _receiver.getLoggedUser();
     _display.addLine(_receiver.showPerson(_person.value()));
 	
 	  //FIXME implement command

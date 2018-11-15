@@ -12,14 +12,14 @@ import sth.core.SchoolManager;
 public class DoSearchPerson extends Command<SchoolManager> {
 
     //FIXME add input fields if needed
-    private Input<String> _person;
+    private Input<Integer> _person;
 
     /**
      * @param receiver
      */
     public DoSearchPerson(SchoolManager receiver) {
         super(Label.SEARCH_PERSON, receiver);
-        _person = _form.addStringInput("Introduza o nome da pessoa a procurar: ");
+        _person = _form.addIntegerInput("Introduza o id da pessoa a procurar: ");
         //FIXME initialize input fields if needed
     }
 

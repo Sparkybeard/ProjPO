@@ -28,7 +28,7 @@ public class DoOpen extends Command<SchoolManager> {
   public DoOpen(SchoolManager receiver) {
     super(Label.OPEN, receiver);
     //FIXME initialize input fields if needed
-    _filename = _form.addStringInput("por favor indique o nome do ficheiro a abrir: ");
+    _filename = _form.addStringInput("Por favor indique o nome do ficheiro a abrir: ");
   }
 
 
@@ -37,7 +37,7 @@ public class DoOpen extends Command<SchoolManager> {
   public final void execute() throws DialogException {
     try {
       _form.parse();
-      _id = _receiver.getUserId();
+      _id = _receiver.getLoggedUser();
       _receiver.importFile(_filename.value());
       //FIXME implement command
     } catch (FileNotFoundException f) {
