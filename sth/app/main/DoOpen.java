@@ -2,12 +2,15 @@ package sth.app.main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import sth.app.main.Message;
+import sth.app.exception.NoSuchPersonException;
 
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import sth.core.SchoolManager;
-
+import sth.core.exception.ImportFileException;
+import sth.core.exception.NoSuchPersonIdException;
 //FIXME import other classes if needed
 
 /**
@@ -16,6 +19,8 @@ import sth.core.SchoolManager;
 public class DoOpen extends Command<SchoolManager> {
 
   //FIXME add input fields if needed
+  private Input<String> _filename;
+  private int _id;
   
   /**
    * @param receiver
@@ -23,17 +28,26 @@ public class DoOpen extends Command<SchoolManager> {
   public DoOpen(SchoolManager receiver) {
     super(Label.OPEN, receiver);
     //FIXME initialize input fields if needed
+    _filename = _form.addStringInput("por favor indique o nome do ficheiro a abrir: ");
   }
- //hello test
+
+
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() throws DialogException {
     try {
+      _form.parse();
+      _id = _receiver.getUserId();
+      _receiver.importFile(_filename.value());
       //FIXME implement command
-    } catch (FileNotFoundException fnfe) {
+    } catch (FileNotFoundException f) {
       _display.popup(Message.fileNotFound());
     } catch (ClassNotFoundException | IOException e) {
       e.printStackTrace();
+    } catch (ImportFileException p) {
+      _display.addLine("No such file.");
+    } catch (NoSuchPersonIdException e) {
+      throw new NoSuchPersonException(e.getId());
     }
   }
 

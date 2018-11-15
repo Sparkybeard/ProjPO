@@ -2,9 +2,9 @@ package sth.core;
 
 import sth.core.exception.BadEntryException;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 class Teacher extends Person {
 
@@ -37,7 +37,66 @@ class Teacher extends Person {
     }
 
 
-    void addDiscipline(Discipline discipline){
+    String getInformation() {
+        String teacherString = toString();
+        StringBuilder teacherInformation = new StringBuilder(teacherString + "\n");
+
+        DisciplineComparator dc = new DisciplineComparator();
+        _disciplines.sort(dc);
+
+        List<Course> courseList = getCourseList();
+        Iterator<Course> courseIterator = courseList.iterator();
+        Course course;
+
+        while(courseIterator.hasNext()){
+            course = courseIterator.next();
+
+            teacherInformation.append(getCourseInformation(course));
+        }
+
+        return teacherInformation.toString();
+    }
+
+
+    private List<Course> getCourseList() {
+        Iterator<Discipline> iterator = _disciplines.iterator();
+        List<Course> courseList = new ArrayList<>();
+        Course course;
+
+        while(iterator.hasNext()){
+            course = iterator.next().getCourse();
+
+            if(!courseList.contains(course))
+                courseList.add(iterator.next().getCourse());
+        }
+
+        CourseComparator cc = new CourseComparator();
+        courseList.sort(cc);
+
+        return courseList;
+    }
+
+
+    private String getCourseInformation(Course course){
+        StringBuilder courseInformation = new StringBuilder(course.toString());
+        Iterator<Discipline> iterator = _disciplines.iterator();
+        Discipline discipline;
+
+        while(iterator.hasNext()){
+            discipline = iterator.next();
+
+            if(course.hasDiscipline(discipline)){
+                courseInformation.append(" - ");
+                courseInformation.append(discipline.getName());
+                courseInformation.append("\n");
+            }
+        }
+
+        return courseInformation.toString();
+    }
+
+
+    void addDiscipline(Discipline discipline) {
         if(!_disciplines.contains(discipline))
             _disciplines.add(discipline);
     }

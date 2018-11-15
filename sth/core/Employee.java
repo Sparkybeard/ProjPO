@@ -1,8 +1,8 @@
 package sth.core;
 
-public class Employee extends Person {
+class Employee extends Person {
 
-    public Employee(int id, String name, int phoneNumber) {
+    Employee(int id, String name, int phoneNumber) {
         super(id, name, phoneNumber);
     }
 
@@ -10,5 +10,9 @@ public class Employee extends Person {
     @Override
     public String toString() {
         return "Employee" + super.toString();
+    }
+
+    String getInformation() {
+        return toString();
     }
 }

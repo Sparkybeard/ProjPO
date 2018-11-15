@@ -20,6 +20,9 @@ abstract class Person {
         return _id + " | " + _phoneNumber + " | " + _name;
     }
 
+    String getInformation() {
+        return toString();
+    }
 
     String getName() {
         return _name;

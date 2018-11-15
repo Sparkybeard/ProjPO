@@ -14,6 +14,7 @@ public class DoChangePhoneNumber extends Command<SchoolManager> {
 
   //FIXME add input fields if needed
   private Input<Integer> _phonenumber;
+  private String _person;
   /**
    * @param receiver
    */
@@ -26,17 +27,12 @@ public class DoChangePhoneNumber extends Command<SchoolManager> {
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() {
-    
+    //may be lacking try catch to fix NoSuchPersonIdException
     _form.parse();
-
-
-	//caso haja excepções por na condição
-    if(_receiver.changePhoneNumber(_phonenumber.value())) {
-	    _display.addLine("Número de telemovel mudado");
-    } else {
-	_display.addLine("Falha ao mudar o nr de telemovel");
-    }
-	    //FIXME implement command
+    _person = _receiver.changePhoneNumber(_phonenumber.value());
+    _display.addLine("Número de telemovel mudado");
+    _display.addLine(_person);
+    //FIXME implement command
   }
 
 }

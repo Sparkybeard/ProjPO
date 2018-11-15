@@ -4,6 +4,7 @@ import sth.app.exception.NoSuchDisciplineException;
 import sth.core.exception.BadEntryException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 class Student extends Person {
@@ -24,7 +25,10 @@ class Student extends Person {
 
     @Override
     public String toString() {
-        return "Student | " + super.toString();
+        if(_isRepresentative)
+            return "Delegado | " + super.toString();
+
+        else return "Student | " + super.toString();
     }
 
 
@@ -43,6 +47,28 @@ class Student extends Person {
         Discipline dis = _course.parseDiscipline(components[1]);
 
         dis.enrollStudent(this);
+    }
+
+
+    String getInformation() {
+        String studentString = toString();
+        String courseString = _course.toString();
+        StringBuilder studentInformation = new StringBuilder(studentString + "\n");
+
+        DisciplineComparator dc = new DisciplineComparator();
+
+
+        Iterator<Discipline> iterator = _disciplines.iterator();
+
+        while (iterator.hasNext()){
+            String disciplineInformation = iterator.next().getName();
+            studentInformation.append(courseString);
+            studentInformation.append("-");
+            studentInformation.append(disciplineInformation);
+            studentInformation.append("\n");
+        }
+
+        return studentInformation.toString();
     }
 
 

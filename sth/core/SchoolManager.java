@@ -21,8 +21,8 @@ public class SchoolManager {
   private Person _loggedUser;
 
 
-  public SchoolManager(String _schoolName) {
-    _school = new School(_schoolName);
+  public SchoolManager() {
+    _school = new School("school");
   }
 
 
@@ -52,13 +52,13 @@ public class SchoolManager {
   }
 
 
-  /*
+  /**
    * @return true when the currently logged in person is an administrative
    */
-  /*public boolean isLoggedUserAdministrative() {
-    //FIXME implement predicate
+  public boolean isLoggedUserAdministrative() {
+    return _loggedUser instanceof Employee;
   }
-  */
+
 
   /**
    * @return true when the currently logged in person is a professor
@@ -91,11 +91,8 @@ public class SchoolManager {
 
 
   /* Gets every registered user on object _school and returns it on a List format */
-  public List<Person> getAllUsers() {
-    List<Person> aux;
-    aux = new ArrayList<>(_school.getAllUsers());
-
-    return aux;
+  public List<String> getAllUsers() {
+    _school.showAllPeople();
   }
 
 
@@ -124,6 +121,11 @@ public class SchoolManager {
       }catch (IOException ioe){
           throw new ImportFileException();
       }
+  }
+
+
+  public String showPerson(int id){
+    return _school.showPerson(id);
   }
 }
 

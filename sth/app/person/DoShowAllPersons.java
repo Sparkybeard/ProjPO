@@ -4,6 +4,11 @@ import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.Display;
 import sth.core.SchoolManager;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 //FIXME import other classes if needed
 
 /**
@@ -12,7 +17,7 @@ import sth.core.SchoolManager;
 public class DoShowAllPersons extends Command<SchoolManager> {
 
   //FIXME add input fields if needed
-  private List<person> _people;
+  private ArrayList<String> _people;
   /**
    * @param receiver
    */
@@ -20,20 +25,17 @@ public class DoShowAllPersons extends Command<SchoolManager> {
     super(Label.SHOW_ALL_PERSONS, receiver);
     //FIXME initialize input fields if needed
     //pode faltar adicionar objecto da escola para importar pessoas
-    _people = _form.ImportPeople();
+
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() {
+
     _form.parse();
-    Iterator<person> iterator = _people.iterator();
-    while (iterator.hasNext()) {
-	    Person aux = iterator.next();
-	    display.addLine(aux.showPerson());
+    _people = _receiver.getAllUsers();
+    display.addLine(_people.value());
     }
 	  //FIXME implement command
 
   }
-
-}

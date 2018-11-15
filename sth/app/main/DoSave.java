@@ -17,7 +17,6 @@ public class DoSave extends Command<SchoolManager> {
   protected Input<String> _filename;
 
   //FIXME add input fields if needed
-  String _filename;
   /**
    * @param receiver
    */
@@ -33,7 +32,7 @@ public class DoSave extends Command<SchoolManager> {
       //FIXME implement command
       _form.parse();
       try {
-          _receiver.saveSerializable(_filename);
+          _receiver.saveSerializable(_filename.value());
           _display.addLine("Ficheiro guardado: ");
 
       } catch (ImportFileException e) {

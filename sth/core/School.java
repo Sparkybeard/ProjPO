@@ -182,4 +182,15 @@ class School implements java.io.Serializable {
           }
       }
   }
+
+
+  String showPerson(int id) {
+      Person person = _peopleMap.get(id);
+      return person.getInformation();
+  }
+
+
+  List<String> showAllPeople() {
+
+  }
 }
