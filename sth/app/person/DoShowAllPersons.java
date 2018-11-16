@@ -17,7 +17,7 @@ import java.util.List;
 public class DoShowAllPersons extends Command<SchoolManager> {
 
   //FIXME add input fields if needed
-  private ArrayList<String> _people;
+  private List<String> _people = new ArrayList<>();
   /**
    * @param receiver
    */
@@ -34,8 +34,10 @@ public class DoShowAllPersons extends Command<SchoolManager> {
 
     _form.parse();
     _people = _receiver.getAllUsers();
-    display.addLine(_people.value());
+    for(String a : _people) {
+      _display.addLine(a);
     }
+  }
 	  //FIXME implement command
 
-  }
+}

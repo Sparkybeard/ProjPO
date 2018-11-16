@@ -1,8 +1,14 @@
 package sth.app.person;
 
+
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.Input;
 import sth.core.SchoolManager;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 
 //FIXME import other classes if needed
 
@@ -12,14 +18,15 @@ import sth.core.SchoolManager;
 public class DoSearchPerson extends Command<SchoolManager> {
 
     //FIXME add input fields if needed
-    private Input<Integer> _person;
+    private Input<String> _person;
+    private List<String> _people = new ArrayList<>();
 
     /**
      * @param receiver
      */
     public DoSearchPerson(SchoolManager receiver) {
         super(Label.SEARCH_PERSON, receiver);
-        _person = _form.addIntegerInput("Introduza o id da pessoa a procurar: ");
+        _person = _form.addStringInput("Introduza o nome da pessoa a procurar: ");
         //FIXME initialize input fields if needed
     }
 
@@ -29,10 +36,12 @@ public class DoSearchPerson extends Command<SchoolManager> {
     public final void execute() {
         //FIXME implement command
         _form.parse();
-        try {
-            _display.addLine(_receiver.ShowPerson(_person.value()));
-        } catch (NoSuchPersonException e) {
-            e.getMessage();
+
+        _people = _receiver.searchPerson(_person.value());
+        //Fixeroo needed, send in String to method otherwise not receivable
+        for (String a : _people) {
+            _display.addLine(a);
         }
+
     }
 }

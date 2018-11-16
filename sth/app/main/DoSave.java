@@ -31,6 +31,8 @@ public class DoSave extends Command<SchoolManager> {
   public final void execute() {
       //FIXME implement command
       _form.parse();
+      //implement newSaveAs
+
       try {
           _receiver.saveSerializable(_filename.value());
           _display.addLine("Ficheiro guardado.");

@@ -22,7 +22,7 @@ public class DoShowDisciplineStudents extends Command<SchoolManager> {
   public DoShowDisciplineStudents(SchoolManager receiver) {
     super(Label.SHOW_COURSE_STUDENTS, receiver);
     //FIXME initialize input fields if needed
-    _discipline = _form.getStringInput("Introduza a disciplina: ");
+    _discipline = _form.addStringInput("Introduza a disciplina: ");
   }
   //Possible bad implementation of exception DialogException
   /** @see pt.tecnico.po.ui.Command#execute() */
@@ -31,9 +31,11 @@ public class DoShowDisciplineStudents extends Command<SchoolManager> {
     //FIXME implement command
     _form.parse();
     try {
-      _display.addLine(_receiver.getDisciplineStudents(_discipline.value()));
+      for(String a : _receiver.getDisciplineStudents(_discipline.value())) {
+        _display.addLine(a);
+      }
     } catch(NoSuchDisciplineIdException e) {
-      throw new NoSuchDisciplineException();
+      throw new NoSuchDisciplineException(_discipline.value());
     }
 
   }
