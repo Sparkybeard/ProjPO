@@ -111,9 +111,9 @@ public class SchoolManager {
   }
 
 
-  public void saveSerializable(String filename) throws ImportFileException{
+  public void newSaveAs(String filename) throws ImportFileException{
       try{
-          _school.saveSerialiazable(filename);
+          _school.newSaveAs(filename);
 
       }catch (IOException ioe){
           throw new ImportFileException();

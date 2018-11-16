@@ -31,7 +31,7 @@ public class DoCreateProject extends sth.app.common.ProjectCommand {
    _form.parse();
 
    _receiver.doCreateProject(_projectname.value(), _disciplinename.value());
-   //FIXME implement command
+
   }
 
 }

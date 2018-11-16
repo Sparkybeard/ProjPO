@@ -27,14 +27,14 @@ public class DoSearchPerson extends Command<SchoolManager> {
     public DoSearchPerson(SchoolManager receiver) {
         super(Label.SEARCH_PERSON, receiver);
         _person = _form.addStringInput("Introduza o nome da pessoa a procurar: ");
-        //FIXME initialize input fields if needed
+
     }
 
 
     /*y* @see pt.tecnico.po.ui.Command#execute() */
     @Override
     public final void execute() {
-        //FIXME implement command
+
         _form.parse();
 
         _people = _receiver.searchPerson(_person.value());

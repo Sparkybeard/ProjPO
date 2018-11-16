@@ -9,21 +9,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-//FIXME import other classes if needed
+
 
 /**
  * 4.2.3. Show all persons.
  */
 public class DoShowAllPersons extends Command<SchoolManager> {
 
-  //FIXME add input fields if needed
+
   private List<String> _people = new ArrayList<>();
   /**
    * @param receiver
    */
   public DoShowAllPersons(SchoolManager receiver) {
     super(Label.SHOW_ALL_PERSONS, receiver);
-    //FIXME initialize input fields if needed
+
     //pode faltar adicionar objecto da escola para importar pessoas
 
   }
@@ -38,6 +38,5 @@ public class DoShowAllPersons extends Command<SchoolManager> {
       _display.addLine(a);
     }
   }
-	  //FIXME implement command
 
 }

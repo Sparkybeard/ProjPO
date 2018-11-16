@@ -178,7 +178,7 @@ class School implements java.io.Serializable {
      *
      * @param filename to save the information
      */
-  void saveSerialiazable(String filename) throws IOException{
+  void newSaveAs(String filename) throws IOException{
       ObjectOutputStream obOut = null;
 
       try{

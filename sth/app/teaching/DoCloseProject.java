@@ -27,7 +27,7 @@ public class DoCloseProject extends sth.app.common.ProjectCommand {
   // FFT instead of NoSuchDis and NoSuchProj.. have "throws Project Exception
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    //FIXME implement command
+
     _form.parse();
     try {
       _receiver.doCloseProject(_discipline.value(), _project.value());

@@ -11,14 +11,14 @@ import pt.tecnico.po.ui.Input;
 import sth.core.SchoolManager;
 import sth.core.exception.ImportFileException;
 import sth.core.exception.NoSuchPersonIdException;
-//FIXME import other classes if needed
+
 
 /**
  * 4.1.1. Open existing document.
  */
 public class DoOpen extends Command<SchoolManager> {
 
-  //FIXME add input fields if needed
+
   private Input<String> _filename;
   private int _id;
   
@@ -27,7 +27,7 @@ public class DoOpen extends Command<SchoolManager> {
    */
   public DoOpen(SchoolManager receiver) {
     super(Label.OPEN, receiver);
-    //FIXME initialize input fields if needed
+
     _filename = _form.addStringInput("Por favor indique o nome do ficheiro a abrir: ");
   }
 
@@ -39,7 +39,7 @@ public class DoOpen extends Command<SchoolManager> {
       _form.parse();
       _id = _receiver.getLoggedUser();
       _receiver.importFile(_filename.value());
-      //FIXME implement command
+      //falta implementar condicao caso de bosta
     } catch (FileNotFoundException f) {
       _display.popup(Message.fileNotFound());
     } catch (ClassNotFoundException | IOException e) {
