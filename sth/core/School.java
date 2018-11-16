@@ -1,8 +1,7 @@
 package sth.core;
 
 /* Collections Import */
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -16,8 +15,6 @@ import sth.core.exception.BadEntryException;
 import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchProjectIdException;
-
-import java.io.IOException;
 
 /**
  * Represents the school of the program
@@ -174,17 +171,21 @@ class School implements java.io.Serializable {
 
 
     /**
-     * Saves in the object information in a file
+     * Saves the school's contents in a file
      *
      * @param filename to save the information
      */
   void newSaveAs(String filename) throws IOException{
+      List<String> peopleList = showAllPeople();
       ObjectOutputStream obOut = null;
+      Iterator<String> iterator = peopleList.iterator();
 
       try{
           FileOutputStream fpout = new FileOutputStream(filename);
           obOut = new ObjectOutputStream(fpout);
-          obOut.writeObject(this);
+
+          while(iterator.hasNext())
+              obOut.writeChars(iterator.next());
 
       }finally {
           if(obOut != null) {
@@ -192,6 +193,7 @@ class School implements java.io.Serializable {
           }
       }
   }
+
 
     /**
      *

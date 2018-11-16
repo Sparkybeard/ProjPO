@@ -28,7 +28,7 @@ public class DoOpen extends Command<SchoolManager> {
   public DoOpen(SchoolManager receiver) {
     super(Label.OPEN, receiver);
 
-    _filename = _form.addStringInput("Por favor indique o nome do ficheiro a abrir: ");
+    _filename = _form.addStringInput(Message.openFile());
   }
 
 
@@ -39,7 +39,7 @@ public class DoOpen extends Command<SchoolManager> {
       _form.parse();
       _id = _receiver.getLoggedUser();
       _receiver.importFile(_filename.value());
-      //falta implementar condicao caso de bosta
+
     } catch (FileNotFoundException f) {
       _display.popup(Message.fileNotFound());
     } catch (ClassNotFoundException | IOException e) {
