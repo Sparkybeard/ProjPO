@@ -1,5 +1,6 @@
 package sth.app.main;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import pt.tecnico.po.ui.Command;
@@ -8,22 +9,19 @@ import sth.core.SchoolManager;
 import sth.core.exception.ImportFileException;
 import sth.app.main.Label;
 
-//FIXME import other classes if needed
-
 /**
  * 4.1.1. Save to file under current name (if unnamed, query for name).
  */
 public class DoSave extends Command<SchoolManager> {
 
   protected Input<String> _filename;
-  private String datafile;
-
+  private String auxfilename;
   /**
    * @param receiver
    */
   public DoSave(SchoolManager receiver) {
     super(Label.SAVE, receiver);
-    _filename = _form.addStringInput("Introduza o nome do ficheiro: ");
+    _filename = _form.addStringInput(Message.newSaveAs());
 
   }
 
@@ -31,18 +29,23 @@ public class DoSave extends Command<SchoolManager> {
   @Override
   public final void execute() {
 
-      if (datafile != null) {
-        _form.parse(); }
+      if (_receiver.getFileName() != null) {
+        auxfilename = _receiver.getFileName();
 
-
-      try {
-          _receiver.newSaveAs(_filename.value());
-          _display.addLine("Ficheiro guardado.");
-
-      } catch (ImportFileException e) {
-          _display.addLine("Impossível importar ficheiro.");
+      } else {
+          _form.parse();
       }
-
+      try {
+        if (_receiver.getFileName() != null) {
+        _receiver.newSaveAs(auxfilename);
+        }
+        else {
+          _receiver.newSaveAs(_filename.value());
+        }
+        }catch(FileNotFoundException ee){
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+  }
   }
 
-}

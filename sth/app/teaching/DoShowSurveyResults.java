@@ -12,18 +12,21 @@ import sth.core.exception.NoSuchDisciplineIdException;
  */
 public class DoShowSurveyResults extends sth.app.common.ProjectCommand {
 
+  private Input<String> _survey;
   /**
    * @param receiver
    */
   public DoShowSurveyResults(SchoolManager receiver) {
     super(Label.SHOW_SURVEY_RESULTS, receiver);
-    //FIXME initialize input fields if needed
+    _survey = _form.addStringInput(Message.requestDisciplineName());
   }
 
   /** @see sth.app.common.ProjectCommand#myExecute() */
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    //FIXME implement command
+    _form.parse();
+    _display.addLine(_receiver.getSurveyResults(_survey.value()));
+    _display.display();
   }
 
 }

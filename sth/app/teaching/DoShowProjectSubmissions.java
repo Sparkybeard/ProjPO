@@ -11,6 +11,7 @@ import sth.core.exception.NoSuchProjectIdException;
  * 4.4.3. Show project submissions.
  */
 public class DoShowProjectSubmissions extends sth.app.common.ProjectCommand {
+
   /**
    * @param receiver
    */
@@ -22,7 +23,9 @@ public class DoShowProjectSubmissions extends sth.app.common.ProjectCommand {
   /** @see sth.app.common.ProjectCommand#myExecute() */
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    //FIXME implement command
+    super.execute();
+    _display.addLine(_receiver.doShowProjectSubmissions(_project));
+    _display.display();
   }
 
 }

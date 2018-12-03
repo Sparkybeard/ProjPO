@@ -16,7 +16,6 @@ public class DoShowPerson extends Command<SchoolManager> {
   public DoShowPerson(SchoolManager receiver) {
     super(Label.SHOW_PERSON, receiver);
 
-    //FIXME initialize input fields if needed
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
@@ -25,7 +24,7 @@ public class DoShowPerson extends Command<SchoolManager> {
 
     _form.parse();
     _display.addLine(_receiver.showPerson());
-	
+    _display.display();
   }
 
 }

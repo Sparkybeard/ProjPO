@@ -37,17 +37,18 @@ public class DoOpen extends Command<SchoolManager> {
   public final void execute() throws DialogException {
     try {
       _form.parse();
+
+
+      _receiver.doOpen(_filename.value());
       _id = _receiver.getLoggedUser();
-      _receiver.importFile(_filename.value());
+
 
     } catch (FileNotFoundException f) {
       _display.popup(Message.fileNotFound());
     } catch (ClassNotFoundException | IOException e) {
       e.printStackTrace();
-    } catch (ImportFileException p) {
-      _display.addLine("No such file.");
     } catch (NoSuchPersonIdException e) {
-      throw new NoSuchPersonException(e.getId());
+      throw new NoSuchPersonException(_id);
     }
   }
 

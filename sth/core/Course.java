@@ -1,8 +1,10 @@
 package sth.core;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+
 
 class Course {
 
@@ -52,8 +54,7 @@ class Course {
 
 
     List getDisciplines() {
-        List listCopy = new ArrayList<>(_disciplineList);
-        return listCopy;
+        return new ArrayList<>(_disciplineList);
     }
 
 
@@ -63,12 +64,12 @@ class Course {
 
 
     Discipline parseDiscipline(String disciplineName){
-        Iterator<Discipline> iter = _disciplineList.iterator();
+        Iterator<Discipline> iterator = _disciplineList.iterator();
         Discipline d;
 
         /* Check if discipline already exists */
-        while(iter.hasNext()){
-            d = iter.next();
+        while(iterator.hasNext()){
+            d = iterator.next();
 
             if(d.getName().equals(disciplineName))
                 return d;
@@ -76,7 +77,14 @@ class Course {
 
         /* If there isn't, create one */
         d = new Discipline(disciplineName, this);
-        _disciplineList.add(d);
+        addDiscipline(d);
         return d;
+    }
+}
+
+
+class CourseComparator implements Comparator<Course> {
+    public int compare(Course c1, Course c2){
+        return c1.getName().compareTo(c2.getName());
     }
 }

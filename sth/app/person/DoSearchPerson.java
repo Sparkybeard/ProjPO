@@ -26,7 +26,7 @@ public class DoSearchPerson extends Command<SchoolManager> {
      */
     public DoSearchPerson(SchoolManager receiver) {
         super(Label.SEARCH_PERSON, receiver);
-        _person = _form.addStringInput("Introduza o nome da pessoa a procurar: ");
+        _person = _form.addStringInput(Message.requestPersonName());
 
     }
 
@@ -38,10 +38,10 @@ public class DoSearchPerson extends Command<SchoolManager> {
         _form.parse();
 
         _people = _receiver.searchPerson(_person.value());
-        //Fixeroo needed, send in String to method otherwise not receivable
-        for (String a : _people) {
-            _display.addLine(a);
-        }
 
+        for (String aux : _people) {
+            _display.addLine(aux);
+        }
+        _display.display();
     }
 }

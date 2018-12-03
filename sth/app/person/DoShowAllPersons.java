@@ -24,8 +24,6 @@ public class DoShowAllPersons extends Command<SchoolManager> {
   public DoShowAllPersons(SchoolManager receiver) {
     super(Label.SHOW_ALL_PERSONS, receiver);
 
-    //pode faltar adicionar objecto da escola para importar pessoas
-
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
@@ -34,9 +32,10 @@ public class DoShowAllPersons extends Command<SchoolManager> {
 
     _form.parse();
     _people = _receiver.getAllUsers();
-    for(String a : _people) {
-      _display.addLine(a);
+    for(String aux : _people) {
+      _display.addLine(aux);
     }
+    _display.display();
   }
 
 }

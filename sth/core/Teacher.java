@@ -21,12 +21,14 @@ class Teacher extends Person {
 
     @Override
     public String toString(){
-        return "Teacher | " + super.toString();
+        return "DOCENTE|" + super.toString();
     }
 
 
     @Override
-    void parseContext(String lineContext, School school) throws BadEntryException {
+    void parseContext(String lineContext, School school)
+            throws BadEntryException {
+
         String components[] =  lineContext.split("\\|");
 
         if (components.length != 2)
@@ -41,19 +43,22 @@ class Teacher extends Person {
 
     String getInformation() {
         String teacherString = toString();
-        StringBuilder teacherInformation = new StringBuilder(teacherString + "\n");
+        StringBuilder teacherInformation = new StringBuilder(teacherString);
 
         DisciplineComparator dc = new DisciplineComparator();
         _disciplines.sort(dc);
 
         List<Course> courseList = getCourseList();
-        Iterator<Course> courseIterator = courseList.iterator();
-        Course course;
+        Iterator<Discipline> disciplineIterator = _disciplines.iterator();
+        Discipline discipline;
 
-        while(courseIterator.hasNext()){
-            course = courseIterator.next();
+        while(disciplineIterator.hasNext()){
+            discipline = disciplineIterator.next();
+            teacherInformation.append("\n* ");
+            teacherInformation.append(discipline.getCourse().getName());
 
-            teacherInformation.append(getCourseInformation(course));
+            teacherInformation.append(" - ");
+            teacherInformation.append(discipline.getName());
         }
 
         return teacherInformation.toString();
@@ -61,21 +66,23 @@ class Teacher extends Person {
 
 
     private List<Course> getCourseList() {
-        Iterator<Discipline> iterator = _disciplines.iterator();
-        List<Course> courseList = new ArrayList<>();
-        Course course;
 
-        while(iterator.hasNext()){
-            course = iterator.next().getCourse();
+        if (_disciplines != null ) {
+            Iterator<Discipline> iterator = _disciplines.iterator();
+            List<Course> courseList = new ArrayList<>();
+            Course course;
 
-            if(!courseList.contains(course))
-                courseList.add(iterator.next().getCourse());
+            while (iterator.hasNext()) {
+                course = iterator.next().getCourse();
+                courseList.add(course);
+            }
+
+            CourseComparator cc = new CourseComparator();
+            courseList.sort(cc);
+
+            return courseList;
         }
-
-        CourseComparator cc = new CourseComparator();
-        courseList.sort(cc);
-
-        return courseList;
+        return null;
     }
 
 
@@ -90,7 +97,7 @@ class Teacher extends Person {
             if(course.hasDiscipline(discipline)){
                 courseInformation.append(" - ");
                 courseInformation.append(discipline.getName());
-                courseInformation.append("\n");
+
             }
         }
 
@@ -105,17 +112,18 @@ class Teacher extends Person {
 
 
     List<Discipline> getDisciplines() {
-        List<Discipline> listCopy = new ArrayList<>(_disciplines);
-        return listCopy;
+        return new ArrayList<>(_disciplines);
     }
 
 
-    Discipline getDiscipline(String disciplineName) throws NoSuchDisciplineIdException{
-        Iterator<Discipline> iter = _disciplines.iterator();
+    private Discipline getDiscipline(String disciplineName)
+            throws NoSuchDisciplineIdException{
+
+        Iterator<Discipline> iterator = _disciplines.iterator();
         Discipline d;
 
-        while (iter.hasNext()) {
-            d = iter.next();
+        while (iterator.hasNext()) {
+            d = iterator.next();
 
             if(d.getName().equals(disciplineName))
                 return d;
@@ -125,7 +133,9 @@ class Teacher extends Person {
     }
 
 
-    List<Student> getDisciplineStudents(String disciplineName) throws NoSuchDisciplineIdException {
+    List<Student> getDisciplineStudents(String disciplineName)
+            throws NoSuchDisciplineIdException {
+
         Discipline d = getDiscipline(disciplineName);
         return d.getStudentList();
     }
@@ -151,16 +161,20 @@ class Teacher extends Person {
     boolean createProject(String projectName, String disciplineName)
             throws NoSuchDisciplineIdException {
 
-        Iterator<Discipline> iterator = _disciplines.iterator();
-        Discipline discipline;
+        Discipline discipline =  getDiscipline(disciplineName);
 
-        while(iterator.hasNext()){
-            discipline = iterator.next();
-
-            if(discipline.getName().equals(disciplineName))
-                return discipline.createProject(projectName);
+        if (discipline == null) {
+            throw new NoSuchDisciplineIdException(disciplineName);
         }
 
-        throw new NoSuchDisciplineIdException(disciplineName);
+        return discipline.createProject(projectName);
+
+    }
+
+
+    String seeSubmissions(String disciplineName, String projectName)
+            throws NoSuchDisciplineIdException, NoSuchProjectIdException{
+
+        return getDiscipline(disciplineName).seeSubmissions(projectName);
     }
 }

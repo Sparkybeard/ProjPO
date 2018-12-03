@@ -1,7 +1,8 @@
 package sth.core;
 
-import sth.app.exception.NoSuchDisciplineException;
+import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.BadEntryException;
+import sth.core.exception.NoSuchProjectIdException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,9 +27,9 @@ class Student extends Person {
     @Override
     public String toString() {
         if(_isRepresentative)
-            return "Delegado | " + super.toString();
+            return "DELEGADO|" + super.toString();
 
-        else return "Student | " + super.toString();
+        else return "ALUNO|" + super.toString();
     }
 
 
@@ -53,7 +54,7 @@ class Student extends Person {
     String getInformation() {
         String studentString = toString();
         String courseString = _course.toString();
-        StringBuilder studentInformation = new StringBuilder(studentString + "\n");
+        StringBuilder studentInformation = new StringBuilder(studentString);
 
         DisciplineComparator dc = new DisciplineComparator();
         _disciplines.sort(dc);
@@ -62,10 +63,10 @@ class Student extends Person {
 
         while (iterator.hasNext()){
             String disciplineInformation = iterator.next().getName();
+            studentInformation.append("\n");
             studentInformation.append(courseString);
             studentInformation.append("-");
             studentInformation.append(disciplineInformation);
-            studentInformation.append("\n");
         }
 
         return studentInformation.toString();
@@ -73,7 +74,7 @@ class Student extends Person {
 
 
     List<Discipline> getDisciplines() {
-        return _disciplines;
+        return new ArrayList<>(_disciplines);
     }
 
 
@@ -88,16 +89,29 @@ class Student extends Person {
     }
 
 
-    boolean addDiscipline(Discipline discipline) throws NoSuchDisciplineException {
+    boolean addDiscipline(Discipline discipline) {
         if(_disciplines.size() >= 6)
             return false;
 
-        else if(_course.hasDiscipline(discipline)) {
-            _disciplines.add(discipline);
-            return true;
+        _disciplines.add(discipline);
+        return true;
+    }
+
+
+    private Discipline getDiscipline(String disciplineName)
+            throws NoSuchDisciplineIdException{
+
+        Iterator<Discipline> iterator = _disciplines.iterator();
+        Discipline discipline;
+
+        while(iterator.hasNext()){
+            discipline = iterator.next();
+
+            if(discipline.getName().equals(disciplineName))
+                return discipline;
         }
 
-        else throw new NoSuchDisciplineException(discipline.getName());
+        throw new NoSuchDisciplineIdException(disciplineName);
     }
 
 
@@ -110,5 +124,11 @@ class Student extends Person {
         return _isRepresentative;
     }
 
+    void addSubmission(
+            String disciplineName, String projectName, String message)
+            throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
+        Discipline discipline = getDiscipline(disciplineName);
+        discipline.addSubmission(projectName, message, getId());
+    }
 }

@@ -20,7 +20,7 @@ public class DoChangePhoneNumber extends Command<SchoolManager> {
    */
   public DoChangePhoneNumber(SchoolManager receiver) {
     super(Label.CHANGE_PHONE_NUMBER, receiver);
-    _phonenumber = _form.addIntegerInput("Introduza o novo nr desejado: ");
+    _phonenumber = _form.addIntegerInput(Message.requestPhoneNumber());
 
   }
 
@@ -30,8 +30,8 @@ public class DoChangePhoneNumber extends Command<SchoolManager> {
     //may be lacking try catch to fix NoSuchPersonIdException
     _form.parse();
     _person = _receiver.changePhoneNumber(_phonenumber.value());
-    _display.addLine("Número de telemovel mudado");
     _display.addLine(_person);
+    _display.display();
 
   }
 

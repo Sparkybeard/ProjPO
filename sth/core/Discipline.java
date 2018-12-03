@@ -1,7 +1,10 @@
 package sth.core;
 
+import sth.core.exception.NoSuchDisciplineIdException;
+import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchProjectIdException;
 
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +29,7 @@ class Discipline {
         _course = course;
         _studentList = new ArrayList<>();
         _teacherList = new ArrayList<>();
+        _projectList = new ArrayList<>();
     }
 
 
@@ -51,14 +55,18 @@ class Discipline {
 
 
     void enrollStudent(Student student) {
-        if(_numberStudents + 1 <= _capacity){
-            _studentList.add(student);
-            _numberStudents++;
+
+            if (_numberStudents + 1 <= _capacity) {
+                _studentList.add(student);
+                student.addDiscipline(this);
+                _numberStudents++;
+                _studentList.sort(new PersonComparator());
         }
     }
 
+
     List<Student> getStudentList(){
-        return _studentList;
+        return new ArrayList<>(_studentList);
     }
 
 
@@ -78,6 +86,7 @@ class Discipline {
         throw new NoSuchProjectIdException(projectName);
     }
 
+
     /**
      *
      * @param projectName name of the project to create
@@ -87,15 +96,55 @@ class Discipline {
         Iterator<Project> iterator = _projectList.iterator();
         Project project;
 
-        while (iterator.hasNext()) {
+        while(iterator.hasNext()){
             project = iterator.next();
 
-            if (project.getName().equals(projectName))
+            if(project.getName().equals(projectName))
                 return false;
         }
 
         project = new Project(projectName);
         _projectList.add(project);
         return true;
+    }
+
+
+    private Project getProject(String projectName)
+            throws NoSuchProjectIdException {
+
+        Iterator<Project> iterator = _projectList.iterator();
+        Project project;
+
+        while(iterator.hasNext()){
+            project = iterator.next();
+
+            if(project.getName().equals(projectName))
+                return project;
+        }
+
+        throw new NoSuchProjectIdException(projectName);
+    }
+
+
+    void addSubmission(String projectName, String message, int id)
+            throws NoSuchProjectIdException {
+
+        Project project = getProject(projectName);
+        project.addSubmission(message, id);
+    }
+
+
+    String seeSubmissions(String projectName) throws NoSuchProjectIdException {
+        Project project = getProject(projectName);
+
+        return getName() + " - " + projectName +
+                "\n" + project.seeSubmissions();
+    }
+}
+
+
+class DisciplineComparator implements Comparator<Discipline> {
+    public int compare(Discipline d1, Discipline d2){
+        return d1.getName().compareTo(d2.getName());
     }
 }

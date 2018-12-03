@@ -9,7 +9,7 @@ class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Employee" + super.toString();
+        return "FUNCIONÁRIO|" + super.toString();
     }
 
     String getInformation() {

@@ -25,7 +25,8 @@ public class DoFinishSurvey extends sth.app.common.ProjectCommand {
   /** @see sth.app.common.ProjectCommand#myExecute() */ 
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    //FIXME implement command
+    super.execute();
+    _receiver.doFinishSurvey(_discipline.value(), _project.value());
   }
 
 }

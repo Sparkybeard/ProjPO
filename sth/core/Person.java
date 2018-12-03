@@ -1,8 +1,9 @@
 package sth.core;
+
 import sth.core.exception.BadEntryException;
+import java.util.Comparator;
 
-
-abstract class Person {
+abstract class Person implements Comparable<Person> {
 
     private int _id;
     private String _name;
@@ -17,7 +18,7 @@ abstract class Person {
 
 
     public String toString(){
-        return _id + " | " + _phoneNumber + " | " + _name;
+        return _id + "|" + _phoneNumber + "|" + _name;
     }
 
     String getInformation() {
@@ -49,5 +50,17 @@ abstract class Person {
      **/
     void parseContext(String context, School school) throws BadEntryException {
         throw new BadEntryException("Should not have extra context: " + context);
+    }
+
+    @Override
+    public int compareTo(Person p) {
+        return this.getName().compareTo(p.getName());
+    }
+}
+
+
+class PersonComparator implements Comparator<Person> {
+    public int compare(Person p1, Person p2){
+        return Integer.compare(p1.getId(), p2.getId());
     }
 }

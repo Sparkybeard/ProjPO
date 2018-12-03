@@ -1,5 +1,7 @@
 package sth.core;
 
+import java.io.*;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,8 +13,6 @@ import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.NoSuchProjectIdException;
 import sth.core.Person;
 import sth.core.School;
-import java.io.IOException;
-import java.io.FileNotFoundException;
 
 
 /**
@@ -22,6 +22,7 @@ public class SchoolManager {
 
   private School _school;
   private Person _loggedUser;
+  private String _saveFileName = "";
 
 
   public SchoolManager() {
@@ -111,12 +112,42 @@ public class SchoolManager {
   }
 
 
-  public void newSaveAs(String filename) throws ImportFileException{
-      try{
-          _school.newSaveAs(filename);
+  public void newSaveAs(String filename) throws IOException {
+      ObjectOutputStream objectOutputStream = null;
+      FileOutputStream fileOutputStream = new FileOutputStream(filename);
+      objectOutputStream = new ObjectOutputStream(fileOutputStream);
+      objectOutputStream.writeObject(_school);
+      _saveFileName = filename;
 
-      }catch (IOException ioe){
-          throw new ImportFileException();
+      if(objectOutputStream != null)
+        objectOutputStream.close();
+  }
+
+
+  public String getFileName() {
+      return _saveFileName;
+  }
+
+
+  public void doOpen(String filename)
+          throws IOException, ClassNotFoundException, NoSuchPersonIdException{
+
+      ObjectInputStream objectInputStream = null;
+
+      try {
+          FileInputStream fileInputStream = new FileInputStream(filename);
+          objectInputStream = new ObjectInputStream(fileInputStream);
+          _school = (School) objectInputStream.readObject();
+
+          _school.getPerson(_loggedUser.getId());
+
+      }catch (NoSuchPersonIdException e){
+          _school = null;
+          throw new NoSuchPersonIdException(_loggedUser.getId());
+
+      }finally {
+          if(objectInputStream != null)
+              objectInputStream.close();
       }
   }
 
@@ -127,7 +158,14 @@ public class SchoolManager {
 
 
   public List<String> searchPerson(String personName){
-    return _school.searchPerson(personName);
+    List<Person> people = _school.searchPersonByName(personName);
+    List<String> str = new ArrayList<>();
+    for (Person p: people){
+
+        str.add(p.getInformation());
+
+    }
+    return str;
   }
 
   

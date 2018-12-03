@@ -2,12 +2,8 @@ package sth.core;
 
 /* Collections Import */
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.Iterator;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /* Exceptions Import */
@@ -171,31 +167,6 @@ class School implements java.io.Serializable {
 
 
     /**
-     * Saves the school's contents in a file
-     *
-     * @param filename to save the information
-     */
-  void newSaveAs(String filename) throws IOException{
-      List<String> peopleList = showAllPeople();
-      ObjectOutputStream obOut = null;
-      Iterator<String> iterator = peopleList.iterator();
-
-      try{
-          FileOutputStream fpout = new FileOutputStream(filename);
-          obOut = new ObjectOutputStream(fpout);
-
-          while(iterator.hasNext())
-              obOut.writeChars(iterator.next());
-
-      }finally {
-          if(obOut != null) {
-              obOut.close();
-          }
-      }
-  }
-
-
-    /**
      *
      * @param id of the person to show
      * @return String with type of person
@@ -233,23 +204,14 @@ class School implements java.io.Serializable {
      * @param personName partial name of the people to search
      * @return list of strings with information of each person
      */
-  List<String> searchPerson(String personName){
-      List<String> peopleInformation = new ArrayList<>();
-      Set<Integer> idList = _peopleMap.keySet();
-      Iterator<Integer> iterator = idList.iterator();
 
-      Person person;
 
-      while(iterator.hasNext()){
-          person = _peopleMap.get(iterator.next());
-
-          if(person.getName().contains(personName))
-              peopleInformation.add(person.getInformation());
-      }
-
-      return peopleInformation;
+  List<Person> searchPersonByName(String personName) {
+      List<Person> pre = new ArrayList<>(_peopleMap.values());
+      List<Person> people = pre.stream().filter(p -> p.getName().contains(personName)).collect(Collectors.toList());
+      Collections.sort(people);
+      return people;
   }
-
 
     /**
      * Closes a project of a given discipline
@@ -278,7 +240,7 @@ class School implements java.io.Serializable {
      * @throws NoSuchDisciplineIdException No discipline with the given name
      */
   boolean createProject(String projName, String disciplineName, int id)
-          throws NoSuchDisciplineIdException {
+          throws NoSuchDisciplineIdException{
 
       return ((Teacher) _peopleMap.get(id)).createProject(projName, disciplineName);
   }
@@ -306,4 +268,37 @@ class School implements java.io.Serializable {
 
       return studentList;
   }
+
+
+  void addSubmission(
+          int id, String displineName, String projectName, String message)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException{
+
+      Student student = (Student) _peopleMap.get(id);
+      student.addSubmission(displineName, projectName, message);
+  }
+
+
+  String seeSubmissions(int id, String projectName, String disciplineName)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException{
+
+      Teacher teacher = (Teacher)_peopleMap.get(id);
+      return teacher.seeSubmissions(disciplineName, projectName);
+  }
 }
+
+/*
+
+TODO List
+
+1. seeSurveyResults (Person)
+2. fillSurvey (Student)
+3. makeSurvey (Representative)
+4. cancelSurvey
+5. openSurvey
+6. closeSurvey
+7. finalizeSurvey
+8. showSurveyResults
+9. showDisciplineSurveys
+
+ */
