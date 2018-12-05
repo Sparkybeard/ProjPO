@@ -204,12 +204,10 @@ class School implements java.io.Serializable {
      * @param personName partial name of the people to search
      * @return list of strings with information of each person
      */
-
-
   List<Person> searchPersonByName(String personName) {
       List<Person> pre = new ArrayList<>(_peopleMap.values());
       List<Person> people = pre.stream().filter(p -> p.getName().contains(personName)).collect(Collectors.toList());
-      Collections.sort(people);
+      people.sort(new PersonComparator());
       return people;
   }
 
@@ -269,36 +267,135 @@ class School implements java.io.Serializable {
       return studentList;
   }
 
-
+    /**
+     *
+     * @param id of the student making the submission
+     * @param disciplineName Discipline with the project
+     * @param projectName Project to make a submission
+     * @param message with the Submission
+     *
+     * @throws NoSuchDisciplineIdException No discipline with the given name
+     * @throws NoSuchProjectIdException No project with the given name
+     */
   void addSubmission(
-          int id, String displineName, String projectName, String message)
+          int id, String disciplineName, String projectName, String message)
           throws NoSuchDisciplineIdException, NoSuchProjectIdException{
 
       Student student = (Student) _peopleMap.get(id);
-      student.addSubmission(displineName, projectName, message);
+      student.addSubmission(disciplineName, projectName, message);
   }
 
-
-  String seeSubmissions(int id, String projectName, String disciplineName)
+    /**
+     *
+     * @param id of the student seeing the submissions
+     * @param disciplineName Discipline with the project
+     * @param projectName Project to see submissions
+     * @return String with submissions
+     *
+     * @throws NoSuchDisciplineIdException No discipline with the given name
+     * @throws NoSuchProjectIdException No project with the given name
+     */
+  String seeSubmissions(int id, String disciplineName, String projectName)
           throws NoSuchDisciplineIdException, NoSuchProjectIdException{
 
       Teacher teacher = (Teacher)_peopleMap.get(id);
       return teacher.seeSubmissions(disciplineName, projectName);
   }
+
+
+  boolean createSurvey(int id, String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      Student student = (Student) _peopleMap.get(id);
+      return student.createSurvey(disciplineName, projectName);
+  }
+
+
+  boolean cancelSurvey(int id, String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      Student student = (Student) _peopleMap.get(id);
+      return student.cancelSurvey(disciplineName, projectName);
+  }
+
+
+  boolean openSurvey(int id, String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      Student student = (Student) _peopleMap.get(id);
+      return student.openSurvey(disciplineName, projectName);
+  }
+
+
+  boolean closeSurvey(int id, String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      Student student = (Student) _peopleMap.get(id);
+      return student.closeSurvey(disciplineName, projectName);
+  }
+
+
+  boolean finalizeSurvey(int id, String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      Student student = (Student) _peopleMap.get(id);
+      return student.finalizeSurvey(disciplineName, projectName);
+  }
+
+
+  boolean fillSurvey(int id, String disciplineName, String projectName,
+                     int hours, String comment)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      Student student = (Student) _peopleMap.get(id);
+      return student.fillSurvey(disciplineName, projectName, hours, comment);
+  }
+
+
+  String showSurveyResults(Student student,
+                           String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      if(_peopleMap.containsKey(student.getId()))
+        return student.showSurveyResults(disciplineName, projectName);
+
+      return null;
+  }
+
+
+  String showSurveyResults(Teacher teacher,
+                           String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      if(_peopleMap.containsKey(teacher.getId()))
+          return teacher.showSurveyResults(disciplineName, projectName);
+
+      return null;
+  }
+
+
+
+  String showDisciplineSurveys(int id, String disciplineName)
+          throws NoSuchDisciplineIdException,
+          NoSuchPersonIdException {
+
+      Student student = (Student) _peopleMap.get(id);
+      return student.showDisciplineSurveys(disciplineName);
+  }
 }
-
-/*
-
-TODO List
-
-1. seeSurveyResults (Person)
-2. fillSurvey (Student)
-3. makeSurvey (Representative)
-4. cancelSurvey
-5. openSurvey
-6. closeSurvey
-7. finalizeSurvey
-8. showSurveyResults
-9. showDisciplineSurveys
-
- */

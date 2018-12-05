@@ -3,7 +3,7 @@ package sth.core;
 import sth.core.exception.BadEntryException;
 import java.util.Comparator;
 
-abstract class Person implements Comparable<Person> {
+abstract class Person {
 
     private int _id;
     private String _name;
@@ -17,6 +17,7 @@ abstract class Person implements Comparable<Person> {
     }
 
 
+    @Override
     public String toString(){
         return _id + "|" + _phoneNumber + "|" + _name;
     }
@@ -34,7 +35,6 @@ abstract class Person implements Comparable<Person> {
         return _id;
     }
 
-
     int getPhoneNumber() {
         return _phoneNumber;
     }
@@ -50,11 +50,6 @@ abstract class Person implements Comparable<Person> {
      **/
     void parseContext(String context, School school) throws BadEntryException {
         throw new BadEntryException("Should not have extra context: " + context);
-    }
-
-    @Override
-    public int compareTo(Person p) {
-        return this.getName().compareTo(p.getName());
     }
 }
 

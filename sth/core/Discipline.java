@@ -54,6 +54,16 @@ class Discipline {
     }
 
 
+    private boolean hasTeacher(Teacher teacher) {
+        return _teacherList.contains(teacher);
+    }
+
+
+    private boolean hasStudent(Student student) {
+        return _studentList.contains(student);
+    }
+
+
     void enrollStudent(Student student) {
 
             if (_numberStudents + 1 <= _capacity) {
@@ -139,6 +149,108 @@ class Discipline {
 
         return getName() + " - " + projectName +
                 "\n" + project.seeSubmissions();
+    }
+
+
+    boolean createSurvey(String projectName, Student student)
+            throws NoSuchProjectIdException, NoSuchPersonIdException{
+
+        if(!hasStudent(student))
+            throw new NoSuchPersonIdException(student.getId());
+
+        return getProject(projectName).createSurvey();
+    }
+
+
+    boolean cancelSurvey(String projectName, Student student)
+            throws NoSuchProjectIdException, NoSuchPersonIdException{
+
+        if(!hasStudent(student))
+            throw new NoSuchPersonIdException(student.getId());
+
+        return getProject(projectName).cancelSurvey();
+    }
+
+
+    boolean openSurvey(String projectName, Student student)
+            throws NoSuchProjectIdException, NoSuchPersonIdException {
+
+        if (!hasStudent(student))
+            throw new NoSuchPersonIdException(student.getId());
+
+        return getProject(projectName).openSurvey();
+    }
+
+
+    boolean closeSurvey(String projectName, Student student)
+            throws NoSuchProjectIdException, NoSuchPersonIdException {
+
+        if (!hasStudent(student))
+            throw new NoSuchPersonIdException(student.getId());
+
+        return getProject(projectName).closeSurvey();
+    }
+
+
+    boolean finalizeSurvey(String projectName, Student student)
+            throws NoSuchProjectIdException, NoSuchPersonIdException {
+
+        if (!hasStudent(student))
+            throw new NoSuchPersonIdException(student.getId());
+
+        return getProject(projectName).finalizeSurvey();
+    }
+
+
+    boolean fillSurvey(String projectName, Student student,
+                       int hours, String comment)
+            throws NoSuchProjectIdException, NoSuchPersonIdException {
+
+        if (!hasStudent(student))
+            throw new NoSuchPersonIdException(student.getId());
+
+        return getProject(projectName).fillSurvey(student, hours, comment);
+    }
+
+
+    String showSurveyResults(String projectName, Teacher teacher)
+            throws NoSuchProjectIdException, NoSuchPersonIdException{
+
+        if(!hasTeacher(teacher))
+            throw new NoSuchPersonIdException(teacher.getId());
+
+        return getProject(projectName).showSurveyResults(getName());
+    }
+
+
+    String showSurveyResults(String projectName, Student student)
+            throws NoSuchProjectIdException, NoSuchPersonIdException {
+
+        if(!hasStudent(student))
+            throw new NoSuchPersonIdException(student.getId());
+
+        return getProject(projectName).showPersonResults(getName(), student);
+    }
+
+
+    String representativeResults(Student student)
+            throws NoSuchPersonIdException {
+
+        if(!hasStudent(student))
+            throw new NoSuchPersonIdException(student.getId());
+
+        StringBuilder results = new StringBuilder();
+        Project project;
+        Iterator<Project> iterator = _projectList.iterator();
+
+        while(iterator.hasNext()) {
+            project = iterator.next();
+
+            results.append(project.representativeResults(getName()));
+            results.append("\n");
+        }
+
+        return results.toString();
     }
 }
 

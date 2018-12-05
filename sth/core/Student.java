@@ -2,6 +2,7 @@ package sth.core;
 
 import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.BadEntryException;
+import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchProjectIdException;
 
 import java.util.ArrayList;
@@ -124,11 +125,121 @@ class Student extends Person {
         return _isRepresentative;
     }
 
+
     void addSubmission(
             String disciplineName, String projectName, String message)
             throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
         Discipline discipline = getDiscipline(disciplineName);
         discipline.addSubmission(projectName, message, getId());
+    }
+
+
+    String showSurveyResults(String disciplineName, String projectName)
+            throws NoSuchDisciplineIdException,
+            NoSuchProjectIdException,
+            NoSuchPersonIdException {
+
+        Discipline discipline = getDiscipline(disciplineName);
+        return discipline.showSurveyResults(projectName, this);
+    }
+
+
+    boolean createSurvey(String disciplineName, String projectName)
+            throws NoSuchDisciplineIdException,
+            NoSuchProjectIdException,
+            NoSuchPersonIdException{
+
+        if(_isRepresentative){
+            Discipline discipline = getDiscipline(disciplineName);
+            return discipline.createSurvey(projectName, this);
+        }
+
+        return false;
+    }
+
+
+    boolean cancelSurvey(String disciplineName, String projectName)
+            throws NoSuchDisciplineIdException,
+            NoSuchProjectIdException,
+            NoSuchPersonIdException{
+
+        if(_isRepresentative){
+            Discipline discipline = getDiscipline(disciplineName);
+            return discipline.cancelSurvey(projectName, this);
+        }
+
+        return false;
+    }
+
+
+    boolean openSurvey(String disciplineName, String projectName)
+            throws NoSuchDisciplineIdException,
+            NoSuchProjectIdException,
+            NoSuchPersonIdException{
+
+        if(_isRepresentative){
+            Discipline discipline = getDiscipline(disciplineName);
+            return discipline.openSurvey(projectName, this);
+        }
+
+        return false;
+    }
+
+
+    boolean closeSurvey(String disciplineName, String projectName)
+            throws NoSuchDisciplineIdException,
+            NoSuchProjectIdException,
+            NoSuchPersonIdException{
+
+        if(_isRepresentative){
+            Discipline discipline = getDiscipline(disciplineName);
+            return discipline.closeSurvey(projectName, this);
+        }
+
+        return false;
+    }
+
+
+    boolean finalizeSurvey(String disciplineName, String projectName)
+            throws NoSuchDisciplineIdException,
+            NoSuchProjectIdException,
+            NoSuchPersonIdException{
+
+        if(_isRepresentative){
+            Discipline discipline = getDiscipline(disciplineName);
+            return discipline.finalizeSurvey(projectName, this);
+        }
+
+        return false;
+    }
+
+
+    boolean fillSurvey(String disciplineName, String projectName,
+                       int hours, String comment)
+            throws NoSuchDisciplineIdException,
+            NoSuchProjectIdException,
+            NoSuchPersonIdException{
+
+        if(_isRepresentative){
+            Discipline discipline = getDiscipline(disciplineName);
+            return discipline.fillSurvey(projectName, this,
+                    hours, comment);
+        }
+
+        return false;
+    }
+
+
+    String showDisciplineSurveys(String disciplineName)
+            throws NoSuchDisciplineIdException,
+            NoSuchPersonIdException {
+
+        if(_isRepresentative){
+            Discipline discipline = getDiscipline(disciplineName);
+            return discipline.representativeResults(this);
+        }
+
+        return null;
     }
 }

@@ -22,7 +22,7 @@ public class SchoolManager {
 
   private School _school;
   private Person _loggedUser;
-  private String _saveFileName = "";
+  private String _saveFileName = null;
 
 
   public SchoolManager() {
@@ -94,7 +94,10 @@ public class SchoolManager {
   }
 
 
-  /* List of strings with every user's information */
+    /**
+     *
+     * @return List of strings with every user's information
+     */
   public List<String> getAllUsers() {
     return _school.showAllPeople();
   }
@@ -112,6 +115,7 @@ public class SchoolManager {
   }
 
 
+/*
   public void newSaveAs(String filename) throws IOException {
       ObjectOutputStream objectOutputStream = null;
       FileOutputStream fileOutputStream = new FileOutputStream(filename);
@@ -122,6 +126,22 @@ public class SchoolManager {
       if(objectOutputStream != null)
         objectOutputStream.close();
   }
+*/
+
+
+  public void newSaveAs(String filename) throws IOException {
+      ObjectOutputStream obOut = null;
+      try {
+          FileOutputStream fpout = new FileOutputStream(filename);
+          obOut = new ObjectOutputStream(fpout);
+          obOut.writeObject(_school);
+
+      } finally {
+          if (obOut != null)
+              obOut.close();
+      }
+  }
+
 
 
   public String getFileName() {
@@ -130,7 +150,8 @@ public class SchoolManager {
 
 
   public void doOpen(String filename)
-          throws IOException, ClassNotFoundException, NoSuchPersonIdException{
+          throws IOException, ClassNotFoundException,
+          NoSuchPersonIdException {
 
       ObjectInputStream objectInputStream = null;
 
@@ -181,5 +202,107 @@ public class SchoolManager {
 
       return _school.createProject(projName, disciplineName, _loggedUser.getId());
   }
-}
 
+
+  public boolean doCreateSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      if(isLoggedUserRepresentative())
+          return _school.createSurvey(_loggedUser.getId(),
+                  disciplineName, projectName);
+
+      return false;
+  }
+
+
+  public boolean doCancelSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      if(isLoggedUserRepresentative())
+          return _school.cancelSurvey(_loggedUser.getId(),
+                  disciplineName, projectName);
+
+      return false;
+  }
+
+
+  public boolean doOpenSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      if(isLoggedUserRepresentative())
+          return _school.openSurvey(_loggedUser.getId(),
+                  disciplineName, projectName);
+
+      return false;
+  }
+
+
+  public boolean doCloseSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      if(isLoggedUserRepresentative())
+          return _school.closeSurvey(_loggedUser.getId(),
+                  disciplineName, projectName);
+
+      return false;
+  }
+
+
+  public boolean doFinalizeSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      if(isLoggedUserRepresentative())
+          return _school.finalizeSurvey(_loggedUser.getId(),
+                  disciplineName, projectName);
+
+      return false;
+  }
+
+
+  public boolean doFillSurvey(String disciplineName, String projectName,
+                              int hours, String comment)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      return _school.fillSurvey(_loggedUser.getId(),
+              disciplineName, projectName, hours, comment);
+  }
+
+
+  public String doShowSurveyResults(String disciplineName,
+                                    String projectName)
+          throws NoSuchDisciplineIdException,
+          NoSuchProjectIdException,
+          NoSuchPersonIdException {
+
+      if(isLoggedUserStudent())
+          return _school.showSurveyResults((Student) _loggedUser,
+                  disciplineName, projectName);
+
+      if(isLoggedUserProfessor())
+          return _school.showSurveyResults((Teacher) _loggedUser,
+                  disciplineName, projectName);
+
+      else return null;
+  }
+
+
+  public String doShowDisciplineSurveys(String disciplineName)
+          throws NoSuchDisciplineIdException,
+          NoSuchPersonIdException {
+
+      return _school.showDisciplineSurveys(_loggedUser.getId(),
+              disciplineName);
+  }
+}

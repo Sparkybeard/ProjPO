@@ -23,7 +23,7 @@ class Course {
         _numberRepresentatives = 0;
     }
 
-    String getName(){
+    String getName() {
         return _name;
     }
 

@@ -11,6 +11,7 @@ public class Project {
     private boolean _closed;
 
     private List<Submission> _submissions;
+    private Survey _survey;
 
 
     Project(String name){
@@ -65,5 +66,83 @@ public class Project {
         }
 
         return projectSubmissions.toString();
+    }
+
+
+    private List<Integer> getStudentList() {
+        List<Integer> studentList = new ArrayList<>();
+        Iterator<Submission> iterator = _submissions.iterator();
+
+        while(iterator.hasNext()){
+            studentList.add(iterator.next().getStudentId());
+        }
+
+        return studentList;
+    }
+
+
+    boolean createSurvey() {
+        if(_survey != null)
+            return false;
+
+        _survey = new Survey(getStudentList());
+        return true;
+    }
+
+
+    boolean cancelSurvey() {
+        if(_survey.cancelSurvey()){
+            _survey = null;
+            return true;
+        }
+
+        return false;
+    }
+
+
+    boolean openSurvey() {
+        if(_survey == null)
+            return false;
+
+        return _survey.openSurvey();
+    }
+
+
+    boolean closeSurvey() {
+        if(_survey == null)
+            return false;
+
+        return _survey.closeSurvey();
+    }
+
+
+    boolean finalizeSurvey() {
+        if(_survey == null)
+            return false;
+
+        return _survey.finalizeSurvey();
+    }
+
+
+    boolean fillSurvey(Student student, int hours, String comment) {
+        if(_survey == null)
+            return false;
+
+        return _survey.fillSurvey(student, hours, comment);
+    }
+
+
+    String showSurveyResults(String disciplineName) {
+        return _survey.showSurveyResults(disciplineName, getName());
+    }
+
+
+    String showPersonResults(String disciplineName, Student student) {
+        return _survey.personResults(student, disciplineName, getName());
+    }
+
+
+    String representativeResults(String disciplineName) {
+        return _survey.representativeResults(disciplineName, getName());
     }
 }
