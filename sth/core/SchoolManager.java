@@ -49,7 +49,7 @@ public class SchoolManager {
    * Do the login of the user with the given identifier.
    *
    * @param id identifier of the user to login
-   * @throws NoSuchPersonIdException if there are no users with the given identifier
+   * @throw if there are no users with the given identifier
    */
   public void login(int id) throws NoSuchPersonIdException {
     _loggedUser = _school.getPerson(id);
@@ -115,20 +115,6 @@ public class SchoolManager {
   }
 
 
-/*
-  public void newSaveAs(String filename) throws IOException {
-      ObjectOutputStream objectOutputStream = null;
-      FileOutputStream fileOutputStream = new FileOutputStream(filename);
-      objectOutputStream = new ObjectOutputStream(fileOutputStream);
-      objectOutputStream.writeObject(_school);
-      _saveFileName = filename;
-
-      if(objectOutputStream != null)
-        objectOutputStream.close();
-  }
-*/
-
-
   public void newSaveAs(String filename) throws IOException {
       ObjectOutputStream obOut = null;
       try {
@@ -143,15 +129,13 @@ public class SchoolManager {
   }
 
 
-
   public String getFileName() {
       return _saveFileName;
   }
 
 
   public void doOpen(String filename)
-          throws IOException, ClassNotFoundException,
-          NoSuchPersonIdException {
+          throws IOException, ClassNotFoundException, NoSuchPersonIdException {
 
       ObjectInputStream objectInputStream = null;
 
@@ -205,9 +189,7 @@ public class SchoolManager {
 
 
   public boolean doCreateSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(isLoggedUserRepresentative())
           return _school.createSurvey(_loggedUser.getId(),
@@ -218,9 +200,7 @@ public class SchoolManager {
 
 
   public boolean doCancelSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(isLoggedUserRepresentative())
           return _school.cancelSurvey(_loggedUser.getId(),
@@ -231,9 +211,7 @@ public class SchoolManager {
 
 
   public boolean doOpenSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(isLoggedUserRepresentative())
           return _school.openSurvey(_loggedUser.getId(),
@@ -244,9 +222,7 @@ public class SchoolManager {
 
 
   public boolean doCloseSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(isLoggedUserRepresentative())
           return _school.closeSurvey(_loggedUser.getId(),
@@ -257,9 +233,7 @@ public class SchoolManager {
 
 
   public boolean doFinalizeSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(isLoggedUserRepresentative())
           return _school.finalizeSurvey(_loggedUser.getId(),
@@ -271,9 +245,7 @@ public class SchoolManager {
 
   public boolean doFillSurvey(String disciplineName, String projectName,
                               int hours, String comment)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       return _school.fillSurvey(_loggedUser.getId(),
               disciplineName, projectName, hours, comment);
@@ -282,9 +254,7 @@ public class SchoolManager {
 
   public String doShowSurveyResults(String disciplineName,
                                     String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(isLoggedUserStudent())
           return _school.showSurveyResults((Student) _loggedUser,
@@ -299,8 +269,7 @@ public class SchoolManager {
 
 
   public String doShowDisciplineSurveys(String disciplineName)
-          throws NoSuchDisciplineIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException {
 
       return _school.showDisciplineSurveys(_loggedUser.getId(),
               disciplineName);
