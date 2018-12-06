@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-class Survey {
-    private SurveyState _state; //FIXME enum
+class Survey implements java.io.Serializable {
+
+    /** Serial number for serialization. */
+    private static final long serialVersionUID = 201810051538L;
+
+    private SurveyState _state;
     private List<Answer> _answers;
     private List<Integer> _surveydList;
     private List<Integer> _submittedList;
@@ -161,7 +165,11 @@ class Survey {
 }
 
 
-abstract class SurveyState{
+abstract class SurveyState implements java.io.Serializable {
+
+    /** Serial number for serialization. */
+    private static final long serialVersionUID = 201810051538L;
+
     Survey _survey;
     private String _stateName;
 
@@ -186,7 +194,7 @@ abstract class SurveyState{
     abstract String studentResults(Student student,
                                    String disciplineName, String projectName);
 
-    abstract String showSurveyResults(String displineName, String projectName);
+    abstract String showSurveyResults(String disciplineName, String projectName);
 
     abstract String representativeResults(String disciplineName,
                                           String projectName);

@@ -20,15 +20,15 @@ public class DoAnswerSurvey extends sth.app.common.ProjectCommand {
   public DoAnswerSurvey(SchoolManager receiver) {
     super(Label.ANSWER_SURVEY, receiver);
     //FIXME initialize input fields if needed
-    _hours = _form.addIntegerInput(Message.getHours)
-    _answer = _form.addStringInput(Message.getComment);
+    _hours = _form.addIntegerInput(Message.requestProjectHours());
+    _answer = _form.addStringInput(Message.requestComment());
     
   }
 
   /** @see sth.app.common.ProjectCommand#myExecute() */
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
-    _form.parse;
+    _form.parse();
     _receiver.answerSurvey(_hours.value(), _answer.value());
       
   }

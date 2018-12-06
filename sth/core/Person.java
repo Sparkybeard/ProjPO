@@ -3,7 +3,10 @@ package sth.core;
 import sth.core.exception.BadEntryException;
 import java.util.Comparator;
 
-abstract class Person {
+abstract class Person implements java.io.Serializable {
+
+    /** Serial number for serialization. */
+    private static final long serialVersionUID = 201810051538L;
 
     private int _id;
     private String _name;
