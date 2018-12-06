@@ -22,7 +22,7 @@ public class DoShowDisciplineStudents extends Command<SchoolManager> {
   public DoShowDisciplineStudents(SchoolManager receiver) {
     super(Label.SHOW_COURSE_STUDENTS, receiver);
 
-    _discipline = _form.addStringInput("Introduza a disciplina: ");
+    _discipline = _form.addStringInput(Message.requestDisciplineName());
   }
   //Possible bad implementation of exception DialogException
   /** @see pt.tecnico.po.ui.Command#execute() */
