@@ -60,7 +60,7 @@ class School implements java.io.Serializable {
      *
      * @param id id of the person to get
      * @return the Person object with the given id
-     * @thr  No one with the given id found
+     * @throw No one with the given id found
      */
   Person getPerson(int id) throws NoSuchPersonIdException {
       if(_peopleMap.containsKey(id))
@@ -85,11 +85,11 @@ class School implements java.io.Serializable {
      * @return Course object with the given name
      */
   Course getCourse(String name){
-      Iterator<Course> iter = _courseList.iterator();
+      Iterator<Course> iterator = _courseList.iterator();
       Course c;
 
-      while(iter.hasNext()){
-          c = iter.next();
+      while(iterator.hasNext()){
+          c = iterator.next();
 
           if(c.getName().equals(name))
               return c;
@@ -138,23 +138,6 @@ class School implements java.io.Serializable {
   }
 
 
-    /**
-     *
-     * @return list of all people in the school
-     */
-  List<Person> getAllUsers() {
-      List<Person> userList = new ArrayList<>();
-      Set<Integer> idList = _peopleMap.keySet();
-      Iterator<Integer> iter = idList.iterator();
-
-      /* Iterate over the peopleMap and put them on a list */
-      while(iter.hasNext())
-          userList.add(_peopleMap.get(iter.next()));
-
-      return userList;
-  }
-
-
   /**
    * @param filename Contains school information to import
    * @throws BadEntryException Exception for unknown import file entries.
@@ -191,6 +174,8 @@ class School implements java.io.Serializable {
     while(iterator.hasNext()){
         allPeopleInformation.add(_peopleMap.get(iterator.next()).getInformation());
     }
+
+    allPeopleInformation.sort(null);
 
     return allPeopleInformation;
   }
@@ -267,7 +252,6 @@ class School implements java.io.Serializable {
       return studentList;
   }
 
-
     /**
      *
      * @param id of the student making the submission
@@ -285,7 +269,6 @@ class School implements java.io.Serializable {
       Student student = (Student) _peopleMap.get(id);
       student.addSubmission(disciplineName, projectName, message);
   }
-
 
     /**
      *
@@ -306,8 +289,7 @@ class School implements java.io.Serializable {
 
 
   boolean createSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.createSurvey(disciplineName, projectName);
@@ -315,8 +297,7 @@ class School implements java.io.Serializable {
 
 
   boolean cancelSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.cancelSurvey(disciplineName, projectName);
@@ -324,8 +305,7 @@ class School implements java.io.Serializable {
 
 
   boolean openSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.openSurvey(disciplineName, projectName);
@@ -333,8 +313,7 @@ class School implements java.io.Serializable {
 
 
   boolean closeSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.closeSurvey(disciplineName, projectName);
@@ -342,8 +321,7 @@ class School implements java.io.Serializable {
 
 
   boolean finalizeSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.finalizeSurvey(disciplineName, projectName);
@@ -352,8 +330,7 @@ class School implements java.io.Serializable {
 
   boolean fillSurvey(int id, String disciplineName, String projectName,
                      int hours, String comment)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.fillSurvey(disciplineName, projectName, hours, comment);
@@ -362,8 +339,7 @@ class School implements java.io.Serializable {
 
   String showSurveyResults(Student student,
                            String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(_peopleMap.containsKey(student.getId()))
         return student.showSurveyResults(disciplineName, projectName);
@@ -374,8 +350,7 @@ class School implements java.io.Serializable {
 
   String showSurveyResults(Teacher teacher,
                            String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(_peopleMap.containsKey(teacher.getId()))
           return teacher.showSurveyResults(disciplineName, projectName);

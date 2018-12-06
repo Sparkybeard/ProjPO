@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class Project implements java.io.Serializable {
-
-    /** Serial number for serialization. */
-    private static final long serialVersionUID = 201810051538L;
-
+public class Project {
     private String _name;
     private String _discription;
     private boolean _closed;
@@ -83,9 +79,6 @@ public class Project implements java.io.Serializable {
 
         return studentList;
     }
-
-
-
 
 
     boolean createSurvey() {
