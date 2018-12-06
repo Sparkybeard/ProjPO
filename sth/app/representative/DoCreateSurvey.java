@@ -29,11 +29,11 @@ public class DoCreateSurvey extends sth.app.common.ProjectCommand {
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
 
     super.execute();
-    try {
-      _receiver.doCreateSurvey(_discipline.value(), _project.value());
-    } catch (NoSuchPersonIdException e) {
 
-    }
+      _receiver.doCreateSurvey(_discipline.value(), _project.value());
+
+
+
 
   }
 }

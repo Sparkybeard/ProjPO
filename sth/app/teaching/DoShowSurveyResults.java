@@ -26,12 +26,10 @@ public class DoShowSurveyResults extends sth.app.common.ProjectCommand {
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
     _form.parse();
-    try {
+
       _display.addLine(_receiver.doShowSurveyResults(_discipline.value(), _project.value()));
       _display.display();
-    } catch (NoSuchPersonIdException e){
 
-    }
   }
 
 }

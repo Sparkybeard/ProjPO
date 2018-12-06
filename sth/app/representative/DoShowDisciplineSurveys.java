@@ -30,7 +30,7 @@ public class DoShowDisciplineSurveys extends Command<SchoolManager> {
     _form.parse();
     try {
       _receiver.doShowDisciplineSurveys(_discipline.value());
-    } catch (NoSuchPersonIdException e) {
+
 
     } catch (NoSuchDisciplineIdException e) {
 

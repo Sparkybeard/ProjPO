@@ -25,11 +25,10 @@ public class DoCloseSurvey extends sth.app.common.ProjectCommand {
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
 
-    try {
+
       _display.display();
       _receiver.doCloseSurvey(_discipline.value(), _project.value());
-    } catch (NoSuchPersonIdException e) {
+
 
     }
   }
-}

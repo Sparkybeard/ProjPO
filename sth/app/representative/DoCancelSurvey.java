@@ -25,10 +25,8 @@ public class DoCancelSurvey extends sth.app.common.ProjectCommand {
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
     super.execute();
-    try {
-      _receiver.doCancelSurvey(_discipline.value(), _project.value());
-    } catch (NoSuchPersonIdException e) {
 
-    }
+      _receiver.doCancelSurvey(_discipline.value(), _project.value());
+
   }
 }

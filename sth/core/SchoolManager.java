@@ -275,4 +275,12 @@ public class SchoolManager {
               disciplineName);
   }
 
+  public String doShowProjectSubmissions(String projectName) {
+      String a = "ola";
+      return a;
+  }
+
+  public void doDeliverProject(String projectName) {
+
+  }
 }

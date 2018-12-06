@@ -23,9 +23,12 @@ public class DoShowProjectSubmissions extends sth.app.common.ProjectCommand {
   /** @see sth.app.common.ProjectCommand#myExecute() */
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
+
     super.execute();
-    _display.addLine(_receiver.doShowProjectSubmissions(_project));
+    _display.addLine(_receiver.doShowProjectSubmissions(_project.value()));
     _display.display();
+
+
   }
 
 }

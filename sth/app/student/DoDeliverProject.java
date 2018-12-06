@@ -26,7 +26,7 @@ public class DoDeliverProject extends sth.app.common.ProjectCommand {
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
     _form.parse();
-    _receiver.deliverProject(_project.value());
+    _receiver.doDeliverProject(_project.value());
 
   }
 
