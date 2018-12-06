@@ -1,13 +1,14 @@
 package sth.core;
 
 import sth.core.exception.NoSuchDisciplineIdException;
-import sth.core.exception.NoSuchPersonIdException;
+import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.NoSuchProjectIdException;
 
 import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 
 class Discipline implements java.io.Serializable {
 
@@ -156,50 +157,50 @@ class Discipline implements java.io.Serializable {
 
 
     boolean createSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchPersonIdException{
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException{
 
         if(!hasStudent(student))
-            throw new NoSuchPersonIdException(student.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         return getProject(projectName).createSurvey();
     }
 
 
     boolean cancelSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchPersonIdException{
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException{
 
         if(!hasStudent(student))
-            throw new NoSuchPersonIdException(student.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         return getProject(projectName).cancelSurvey();
     }
 
 
     boolean openSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchPersonIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
 
         if (!hasStudent(student))
-            throw new NoSuchPersonIdException(student.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         return getProject(projectName).openSurvey();
     }
 
 
     boolean closeSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchPersonIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
 
         if (!hasStudent(student))
-            throw new NoSuchPersonIdException(student.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         return getProject(projectName).closeSurvey();
     }
 
 
     boolean finalizeSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchPersonIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
 
         if (!hasStudent(student))
-            throw new NoSuchPersonIdException(student.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         return getProject(projectName).finalizeSurvey();
     }
@@ -207,40 +208,40 @@ class Discipline implements java.io.Serializable {
 
     boolean fillSurvey(String projectName, Student student,
                        int hours, String comment)
-            throws NoSuchProjectIdException, NoSuchPersonIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
 
         if (!hasStudent(student))
-            throw new NoSuchPersonIdException(student.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         return getProject(projectName).fillSurvey(student, hours, comment);
     }
 
 
     String showSurveyResults(String projectName, Teacher teacher)
-            throws NoSuchProjectIdException, NoSuchPersonIdException{
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException{
 
         if(!hasTeacher(teacher))
-            throw new NoSuchPersonIdException(teacher.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         return getProject(projectName).showSurveyResults(getName());
     }
 
 
     String showSurveyResults(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchPersonIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
 
         if(!hasStudent(student))
-            throw new NoSuchPersonIdException(student.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         return getProject(projectName).showPersonResults(getName(), student);
     }
 
 
     String representativeResults(Student student)
-            throws NoSuchPersonIdException {
+            throws NoSuchDisciplineIdException {
 
         if(!hasStudent(student))
-            throw new NoSuchPersonIdException(student.getId());
+            throw new NoSuchDisciplineIdException(getName());
 
         StringBuilder results = new StringBuilder();
         Project project;

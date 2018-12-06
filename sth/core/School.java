@@ -60,7 +60,7 @@ class School implements java.io.Serializable {
      *
      * @param id id of the person to get
      * @return the Person object with the given id
-     * @throws NoSuchPersonIdException No one with the given id found
+     * @thr  No one with the given id found
      */
   Person getPerson(int id) throws NoSuchPersonIdException {
       if(_peopleMap.containsKey(id))
@@ -267,6 +267,7 @@ class School implements java.io.Serializable {
       return studentList;
   }
 
+
     /**
      *
      * @param id of the student making the submission
@@ -284,6 +285,7 @@ class School implements java.io.Serializable {
       Student student = (Student) _peopleMap.get(id);
       student.addSubmission(disciplineName, projectName, message);
   }
+
 
     /**
      *
@@ -305,8 +307,7 @@ class School implements java.io.Serializable {
 
   boolean createSurvey(int id, String disciplineName, String projectName)
           throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.createSurvey(disciplineName, projectName);
@@ -315,8 +316,7 @@ class School implements java.io.Serializable {
 
   boolean cancelSurvey(int id, String disciplineName, String projectName)
           throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.cancelSurvey(disciplineName, projectName);
@@ -325,8 +325,7 @@ class School implements java.io.Serializable {
 
   boolean openSurvey(int id, String disciplineName, String projectName)
           throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.openSurvey(disciplineName, projectName);
@@ -335,8 +334,7 @@ class School implements java.io.Serializable {
 
   boolean closeSurvey(int id, String disciplineName, String projectName)
           throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.closeSurvey(disciplineName, projectName);
@@ -345,8 +343,7 @@ class School implements java.io.Serializable {
 
   boolean finalizeSurvey(int id, String disciplineName, String projectName)
           throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.finalizeSurvey(disciplineName, projectName);
@@ -356,8 +353,7 @@ class School implements java.io.Serializable {
   boolean fillSurvey(int id, String disciplineName, String projectName,
                      int hours, String comment)
           throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          NoSuchProjectIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.fillSurvey(disciplineName, projectName, hours, comment);
@@ -367,8 +363,7 @@ class School implements java.io.Serializable {
   String showSurveyResults(Student student,
                            String disciplineName, String projectName)
           throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          NoSuchProjectIdException {
 
       if(_peopleMap.containsKey(student.getId()))
         return student.showSurveyResults(disciplineName, projectName);
@@ -380,8 +375,7 @@ class School implements java.io.Serializable {
   String showSurveyResults(Teacher teacher,
                            String disciplineName, String projectName)
           throws NoSuchDisciplineIdException,
-          NoSuchProjectIdException,
-          NoSuchPersonIdException {
+          NoSuchProjectIdException {
 
       if(_peopleMap.containsKey(teacher.getId()))
           return teacher.showSurveyResults(disciplineName, projectName);
@@ -392,8 +386,7 @@ class School implements java.io.Serializable {
 
 
   String showDisciplineSurveys(int id, String disciplineName)
-          throws NoSuchDisciplineIdException,
-          NoSuchPersonIdException {
+          throws NoSuchDisciplineIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.showDisciplineSurveys(disciplineName);

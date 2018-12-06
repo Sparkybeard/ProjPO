@@ -2,7 +2,6 @@ package sth.core;
 
 import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.BadEntryException;
-import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchProjectIdException;
 
 import java.util.ArrayList;
@@ -137,8 +136,7 @@ class Student extends Person {
 
     String showSurveyResults(String disciplineName, String projectName)
             throws NoSuchDisciplineIdException,
-            NoSuchProjectIdException,
-            NoSuchPersonIdException {
+            NoSuchProjectIdException {
 
         Discipline discipline = getDiscipline(disciplineName);
         return discipline.showSurveyResults(projectName, this);
@@ -147,8 +145,7 @@ class Student extends Person {
 
     boolean createSurvey(String disciplineName, String projectName)
             throws NoSuchDisciplineIdException,
-            NoSuchProjectIdException,
-            NoSuchPersonIdException{
+            NoSuchProjectIdException {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
@@ -161,8 +158,7 @@ class Student extends Person {
 
     boolean cancelSurvey(String disciplineName, String projectName)
             throws NoSuchDisciplineIdException,
-            NoSuchProjectIdException,
-            NoSuchPersonIdException{
+            NoSuchProjectIdException {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
@@ -175,8 +171,7 @@ class Student extends Person {
 
     boolean openSurvey(String disciplineName, String projectName)
             throws NoSuchDisciplineIdException,
-            NoSuchProjectIdException,
-            NoSuchPersonIdException{
+            NoSuchProjectIdException {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
@@ -189,8 +184,7 @@ class Student extends Person {
 
     boolean closeSurvey(String disciplineName, String projectName)
             throws NoSuchDisciplineIdException,
-            NoSuchProjectIdException,
-            NoSuchPersonIdException{
+            NoSuchProjectIdException {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
@@ -203,8 +197,7 @@ class Student extends Person {
 
     boolean finalizeSurvey(String disciplineName, String projectName)
             throws NoSuchDisciplineIdException,
-            NoSuchProjectIdException,
-            NoSuchPersonIdException{
+            NoSuchProjectIdException {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
@@ -218,8 +211,7 @@ class Student extends Person {
     boolean fillSurvey(String disciplineName, String projectName,
                        int hours, String comment)
             throws NoSuchDisciplineIdException,
-            NoSuchProjectIdException,
-            NoSuchPersonIdException{
+            NoSuchProjectIdException {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
@@ -232,8 +224,7 @@ class Student extends Person {
 
 
     String showDisciplineSurveys(String disciplineName)
-            throws NoSuchDisciplineIdException,
-            NoSuchPersonIdException {
+            throws NoSuchDisciplineIdException {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);

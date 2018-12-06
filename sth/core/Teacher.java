@@ -2,7 +2,6 @@ package sth.core;
 
 import sth.core.exception.BadEntryException;
 import sth.core.exception.NoSuchDisciplineIdException;
-import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchProjectIdException;
 
 import java.util.List;
@@ -182,8 +181,7 @@ class Teacher extends Person {
 
     String showSurveyResults(String disciplineName, String projectName)
             throws NoSuchDisciplineIdException,
-            NoSuchProjectIdException,
-            NoSuchPersonIdException {
+            NoSuchProjectIdException {
 
         Discipline discipline = getDiscipline(disciplineName);
         return discipline.showSurveyResults(projectName, this);
