@@ -5,6 +5,7 @@ import pt.tecnico.po.ui.Input;
 import sth.core.SchoolManager;
 
 import sth.core.exception.NoSuchDisciplineIdException;
+import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchProjectIdException;
 
 /**
@@ -24,7 +25,10 @@ public class DoCancelSurvey extends sth.app.common.ProjectCommand {
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
     super.execute();
-    _receiver.cancelSurvey(_project.value());
-  }
+    try {
+      _receiver.doCancelSurvey(_discipline.value(), _project.value());
+    } catch (NoSuchPersonIdException e) {
 
+    }
+  }
 }

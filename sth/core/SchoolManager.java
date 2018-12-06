@@ -305,4 +305,5 @@ public class SchoolManager {
       return _school.showDisciplineSurveys(_loggedUser.getId(),
               disciplineName);
   }
+
 }

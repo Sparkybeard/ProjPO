@@ -4,6 +4,7 @@ import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import sth.core.SchoolManager;
 
+import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchProjectIdException;
 import sth.core.exception.NoSuchDisciplineIdException;
 
@@ -17,15 +18,18 @@ public class DoCloseSurvey extends sth.app.common.ProjectCommand {
    */
   public DoCloseSurvey(SchoolManager receiver) {
     super(Label.CLOSE_SURVEY, receiver);
-    _surveyName = _form.addStringInput(Message.requestProjectName());
+
   }
 
   /** @see sth.app.common.ProjectCommand#myExecute() */
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
-    _display.addLine(_receiver.showSurveys());
-    _display.display();
-    _receiver.closeSurvey(_surveyName.value());
-  }
 
+    try {
+      _display.display();
+      _receiver.doCloseSurvey(_discipline.value(), _project.value());
+    } catch (NoSuchPersonIdException e) {
+
+    }
+  }
 }

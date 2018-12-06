@@ -6,6 +6,7 @@ import sth.core.SchoolManager;
 
 //FIXME import other classes if needed
 
+import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchProjectIdException;
 import sth.core.exception.NoSuchDisciplineIdException;
 
@@ -26,7 +27,10 @@ public class DoFinishSurvey extends sth.app.common.ProjectCommand {
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
     super.execute();
-    _receiver.doFinishSurvey(_discipline.value(), _project.value());
-  }
+    try {
+      _receiver.doFinalizeSurvey(_discipline.value(), _project.value());
+    } catch (NoSuchPersonIdException e) {
 
+    }
+  }
 }
