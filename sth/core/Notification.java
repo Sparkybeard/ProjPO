@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-class Notification implements Subject {
+class Notification implements java.io.Serializable, Subject {
+
+    /** Serial number for serialization. */
+    private static final long serialVersionUID = 201810051538L;
+
     private String _disciplineName;
     private String _projectName;
     private String _surveyState;

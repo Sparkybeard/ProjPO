@@ -1,6 +1,10 @@
 package sth.core;
 
-class Answer {
+class Answer implements java.io.Serializable {
+
+    /** Serial number for serialization. */
+    private static final long serialVersionUID = 201810051538L;
+
     private String _comment;
     private int _hours;
 

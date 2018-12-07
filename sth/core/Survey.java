@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-class Survey {
+class Survey implements java.io.Serializable {
+
+    /** Serial number for serialization. */
+    private static final long serialVersionUID = 201810051538L;
+
     private SurveyState _state;
     private List<Answer> _answers;
     private List<Integer> _surveydList;
@@ -160,7 +164,11 @@ class Survey {
 }
 
 
-abstract class SurveyState{
+abstract class SurveyState implements java.io.Serializable {
+
+    /** Serial number for serialization. */
+    private static final long serialVersionUID = 201810051538L;
+
     Survey _survey;
     private String _stateName;
 
