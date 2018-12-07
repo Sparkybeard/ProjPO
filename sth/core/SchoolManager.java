@@ -127,36 +127,27 @@ public class SchoolManager {
   }
 
 
-  public void doOpen(String filename)
-          throws IOException, ClassNotFoundException, NoSuchPersonIdException {
+    public void doOpen(String filename)
+            throws IOException, ClassNotFoundException, NoSuchPersonIdException {
 
-      ObjectInputStream objectInputStream = null;
+        ObjectInputStream objectInputStream = null;
 
-      try {
-          System.out.println("ola14");
-          FileInputStream fileInputStream = new FileInputStream(filename);
-          System.out.println("ola13");
-          objectInputStream = new ObjectInputStream(fileInputStream);
-          System.out.println("ola12");
-          _school = (School) objectInputStream.readObject();
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            _school = (School) objectInputStream.readObject();
 
-          System.out.println("ola1");
-          _school.getPerson(_loggedUser.getId());
-          System.out.println("ola2");
+            _school.getPerson(_loggedUser.getId());
 
-      }catch (NoSuchPersonIdException e){
-          _school = null;
-          System.out.println("ola4");
-          throw new NoSuchPersonIdException(_loggedUser.getId());
+        }catch (NoSuchPersonIdException e){
+            _school = null;
+            throw new NoSuchPersonIdException(_loggedUser.getId());
 
-
-      }finally {
-          if(objectInputStream != null)
-              objectInputStream.close();
-          System.out.println("ola3");
-
-      }
-  }
+        }finally {
+            if(objectInputStream != null)
+                objectInputStream.close();
+        }
+    }
 
 
   public String showPerson(){
