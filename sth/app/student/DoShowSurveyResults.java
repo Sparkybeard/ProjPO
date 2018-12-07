@@ -18,12 +18,22 @@ public class DoShowSurveyResults extends sth.app.common.ProjectCommand {
    */
   public DoShowSurveyResults(SchoolManager receiver) {
     super(Label.SHOW_SURVEY_RESULTS, receiver);
+
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, NoSurveyException {
-    //FIXME implement command
+    try {
+      super.execute();
+      _display.addLine(_receiver.doShowSurveyResults(_discipline.value(), _project.value()));
+    } catch(NoSuchProjectIdException e){
+
+    } catch(NoSuchDisciplineIdException e) {
+
+    } catch(NoSurveyException e) {
+
+    } catch(N)
   }
 
 }

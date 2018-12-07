@@ -12,9 +12,7 @@ import sth.core.exception.NoSuchDisciplineIdException;
  */
 public class DoDeliverProject extends sth.app.common.ProjectCommand {
 
-  //FIXME add input fields if needed
-  private Input<String> _project;
-  private Input<String> _discipline;
+
   private Input<String> _submission;
 
   /**
@@ -22,8 +20,6 @@ public class DoDeliverProject extends sth.app.common.ProjectCommand {
    */
   public DoDeliverProject(SchoolManager receiver) {
     super(Label.DELIVER_PROJECT, receiver);
-      _discipline = _form.addStringInput(Message.requestDisciplineName());
-      _project = _form.addStringInput(Message.requestProjectName());
       _submission = _form.addStringInput(Message.requestDeliveryMessage());
   }
 
