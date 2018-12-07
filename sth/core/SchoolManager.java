@@ -109,11 +109,16 @@ public class SchoolManager {
 
 
   public void newSaveAs(String filename) throws IOException {
+
+      if(_saveFileName != null)
+        filename = _saveFileName;
+
       ObjectOutputStream obOut = null;
       try {
           FileOutputStream fpout = new FileOutputStream(filename);
           obOut = new ObjectOutputStream(fpout);
           obOut.writeObject(_school);
+          _saveFileName = filename;
 
       } finally {
           if (obOut != null)
