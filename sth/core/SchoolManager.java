@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 import sth.app.exception.*;
 import sth.core.exception.*;
-import sth.core.exception.DuplicateSurveyException;
-
+import sth.app.exception.DuplicateSurveyException;
 
 /**
  * The façade class.
@@ -200,9 +199,13 @@ public class SchoolManager {
           throws NoSuchDisciplineIdException, NoSuchProjectIdException,
           DuplicateSurveyException {
 
-      if(isLoggedUserRepresentative())
-          if(!_school.createSurvey(_loggedUser.getId(), disciplineName, projectName))
-              throw new DuplicateSurveyException();
+      try {
+          if (isLoggedUserRepresentative())
+              _school.createSurvey(_loggedUser.getId(), disciplineName, projectName);
+
+      } catch (sth.core.exception.DuplicateSurveyException e) {
+          throw new DuplicateSurveyException(disciplineName, projectName);
+      }
   }
 
 

@@ -73,14 +73,14 @@ class Teacher extends Person {
 
         Iterator<Course> courseIterator = courseList.iterator();
 
-        while (courseIterator.hasNext()){
-            List<Discipline> disciplineList = courseIterator.next().getDisciplines();
-            Iterator<Discipline> disciplineIterator = disciplineList.iterator();
+        while (courseIterator.hasNext()) {
+            Iterator<Discipline> disciplineIterator = _disciplines.iterator();
+            Course course = courseIterator.next();
 
-            while (disciplineIterator.hasNext()){
+            while(disciplineIterator.hasNext()){
                 Discipline discipline = disciplineIterator.next();
 
-                if(_disciplines.contains(discipline)){
+                if(course.hasDiscipline(discipline)){
                     teacherInformation.append("\n");
                     teacherInformation.append(discipline.getCourse().getName());
                     teacherInformation.append(" - ");
