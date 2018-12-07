@@ -33,6 +33,7 @@ public class DoShowDisciplineStudents extends Command<SchoolManager> {
     try {
       for(String a : _receiver.getDisciplineStudents(_discipline.value())) {
         _display.addLine(a);
+        _display.display();
       }
     } catch(NoSuchDisciplineIdException e) {
       throw new NoSuchDisciplineException(_discipline.value());
