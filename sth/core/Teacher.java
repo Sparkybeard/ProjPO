@@ -189,7 +189,7 @@ class Teacher extends Person {
     @Override
     String getMessage(String message, String disciplineName, String projectName){
         if(message.equals("finalizado")) {
-            return "Resultados do inquerito do projeto " + projectName
+            return "Resultados do inquérito do projeto " + projectName
                     + " da disciplina " + disciplineName;
         }
 

@@ -251,17 +251,16 @@ class Student extends Person {
     }
 
 
-    //FIXME falta acentos
     @Override
     String getMessage(String message, String disciplineName, String projectName){
         if(message.equals("aberto")) {
-            return "Pode preencher inquerito do projeto " + projectName
+            return "Pode preencher inquérito do projeto " + projectName
                     + " da disciplina " + disciplineName;
         }
 
 
         if(message.equals("finalizado")) {
-            return "Resultados do inquerito do projeto " + projectName
+            return "Resultados do inquérito do projeto " + projectName
                     + " da disciplina " + disciplineName;
         }
 

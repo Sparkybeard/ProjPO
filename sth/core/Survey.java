@@ -423,7 +423,6 @@ class FinalizedSurvey extends SurveyState {
     }
 
 
-    //FIXME falta acento no medio
     @Override
     String studentResults(Student student,
                           String disciplineName, String projectName) {
@@ -431,16 +430,15 @@ class FinalizedSurvey extends SurveyState {
         int hours = _survey.numberHours()[2];
         if(_survey.hasSurveyd(student)){
             return disciplineName + " - " + projectName + "\n"
-                    + " * Numero de respostas: " + _survey.numberSubmissions()
+                    + " * Número de respostas: " + _survey.numberSubmissions()
                     + "\n"
-                    + " * Tempo medio (horas): " + hours;
+                    + " * Tempo médio (horas): " + hours;
         }
 
         return null;
     }
 
 
-    //FIXME falta acentos
     @Override
     String showSurveyResults(String disciplineName, String projectName) {
         String results;
@@ -450,13 +448,13 @@ class FinalizedSurvey extends SurveyState {
         int avgHours = hours[2];
 
         results = disciplineName + " - " + projectName + "\n";
-        results += " * Numero de submissoes: " + _survey.numberSubmissions()
+        results += " * Número de submissões: " + _survey.numberSubmissions()
                 + "\n";
 
-        results += " * Numero de respostas: " + _survey.numberAnswers()
+        results += " * Número de respostas: " + _survey.numberAnswers()
                 + "\n";
 
-        results += " * Tempo de resolucao (horas) (minimo, medio, maximo): "
+        results += " * Tempo de resolução (horas) (mínimo, médio, máximo): "
                 + minHours + ", " + avgHours + ", " + maxHours;
 
         return results;
