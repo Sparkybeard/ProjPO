@@ -74,19 +74,10 @@ class Teacher extends Person {
         Iterator<Course> courseIterator = courseList.iterator();
 
         while (courseIterator.hasNext()) {
-            Iterator<Discipline> disciplineIterator = _disciplines.iterator();
             Course course = courseIterator.next();
 
-            while(disciplineIterator.hasNext()){
-                Discipline discipline = disciplineIterator.next();
-
-                if(course.hasDiscipline(discipline)){
-                    teacherInformation.append("\n");
-                    teacherInformation.append(discipline.getCourse().getName());
-                    teacherInformation.append(" - ");
-                    teacherInformation.append(discipline.getName());
-                }
-            }
+            teacherInformation.append("\n");
+            teacherInformation.append(getCourseInformation(course));
         }
 
         return teacherInformation.toString();
@@ -123,6 +114,7 @@ class Teacher extends Person {
             discipline = iterator.next();
 
             if(course.hasDiscipline(discipline)){
+                courseInformation.append(course.getName());
                 courseInformation.append(" - ");
                 courseInformation.append(discipline.getName());
 
@@ -136,11 +128,6 @@ class Teacher extends Person {
     void addDiscipline(Discipline discipline) {
         if(!_disciplines.contains(discipline))
             _disciplines.add(discipline);
-    }
-
-
-    List<Discipline> getDisciplines() {
-        return new ArrayList<>(_disciplines);
     }
 
 
