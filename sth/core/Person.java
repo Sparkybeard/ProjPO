@@ -33,9 +33,14 @@ abstract class Person implements java.io.Serializable, Observer {
         return _id + "|" + _phoneNumber + "|" + _name;
     }
 
+
     String getInformation() {
-        return toString();
+        return toString() + getInfo();
     }
+
+
+    abstract String getInfo();
+
 
     String getName() {
         return _name;
@@ -46,9 +51,11 @@ abstract class Person implements java.io.Serializable, Observer {
         return _id;
     }
 
+
     int getPhoneNumber() {
         return _phoneNumber;
     }
+
 
     void changePhoneNumber(int phoneNumber){
         _phoneNumber = phoneNumber;

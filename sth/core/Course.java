@@ -58,6 +58,7 @@ class Course implements java.io.Serializable {
 
 
     List getDisciplines() {
+        _disciplineList.sort(new DisciplineComparator());
         return new ArrayList<>(_disciplineList);
     }
 

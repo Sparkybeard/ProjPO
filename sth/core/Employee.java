@@ -12,8 +12,8 @@ class Employee extends Person {
         return "FUNCIONÁRIO|" + super.toString();
     }
 
-    String getInformation() {
-        return toString();
+    String getInfo() {
+        return "";
     }
 
     @Override

@@ -49,10 +49,10 @@ class Student extends Person {
     }
 
 
-    String getInformation() {
-        String studentString = toString();
+    @Override
+    String getInfo() {
         String courseString = _course.toString();
-        StringBuilder studentInformation = new StringBuilder(studentString);
+        StringBuilder studentInformation = new StringBuilder();
 
         DisciplineComparator dc = new DisciplineComparator();
         _disciplines.sort(dc);
@@ -68,22 +68,6 @@ class Student extends Person {
         }
 
         return studentInformation.toString();
-    }
-
-
-    List<Discipline> getDisciplines() {
-        return new ArrayList<>(_disciplines);
-    }
-
-
-    void setCourse(Course course) {
-        _course = course;
-        _disciplines.clear();
-    }
-
-
-    Course getCourse() {
-        return _course;
     }
 
 

@@ -38,7 +38,8 @@ class Teacher extends Person {
         discipline.addTeacher(this);
     }
 
-
+/*
+    @Override
     String getInformation() {
         String teacherString = toString();
         StringBuilder teacherInformation = new StringBuilder(teacherString);
@@ -57,6 +58,35 @@ class Teacher extends Person {
 
             teacherInformation.append(" - ");
             teacherInformation.append(discipline.getName());
+        }
+
+        return teacherInformation.toString();
+    }
+*/
+
+    String getInfo() {
+        StringBuilder teacherInformation = new StringBuilder();
+
+        List<Course> courseList = getCourseList();
+        if(courseList == null)
+            return null;
+
+        Iterator<Course> courseIterator = courseList.iterator();
+
+        while (courseIterator.hasNext()){
+            List<Discipline> disciplineList = courseIterator.next().getDisciplines();
+            Iterator<Discipline> disciplineIterator = disciplineList.iterator();
+
+            while (disciplineIterator.hasNext()){
+                Discipline discipline = disciplineIterator.next();
+
+                if(_disciplines.contains(discipline)){
+                    teacherInformation.append("\n");
+                    teacherInformation.append(discipline.getCourse().getName());
+                    teacherInformation.append(" - ");
+                    teacherInformation.append(discipline.getName());
+                }
+            }
         }
 
         return teacherInformation.toString();
@@ -185,7 +215,7 @@ class Teacher extends Person {
         return discipline.showSurveyResults(projectName, this);
     }
 
-    //FIXME falta acentos
+
     @Override
     String getMessage(String message, String disciplineName, String projectName){
         if(message.equals("finalizado")) {
