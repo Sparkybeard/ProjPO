@@ -26,7 +26,6 @@ public class DoOpenSurvey extends sth.app.common.ProjectCommand {
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
     try {
-      super.execute();
       _receiver.doOpenSurvey(_discipline.value(), _project.value());
     } catch (NoSuchProjectIdException e) {
       throw new NoSuchProjectException(_discipline.value(), _project.value());

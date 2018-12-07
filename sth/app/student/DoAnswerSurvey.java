@@ -2,6 +2,7 @@ package sth.app.student;
 
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
+import sth.app.exception.NoSuchDisciplineException;
 import sth.app.exception.NoSuchProjectException;
 import sth.core.SchoolManager;
 
@@ -39,7 +40,7 @@ public class DoAnswerSurvey extends sth.app.common.ProjectCommand {
     } catch (NoSuchProjectIdException e) {
       throw new NoSuchProjectException(_discipline.value(), _project.value());
     } catch (NoSuchDisciplineIdException e) {
-      throw new NoSuchProjectException(_discipline.value(), _project.value());
+      throw new NoSuchDisciplineException(_discipline.value());
     }
   }
 }

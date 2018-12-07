@@ -290,6 +290,7 @@ class School implements java.io.Serializable {
           DuplicateSurveyException {
 
       Student student = (Student) _peopleMap.get(id);
+
       return student.createSurvey(disciplineName, projectName);
   }
 

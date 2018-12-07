@@ -133,27 +133,20 @@ public class SchoolManager {
       ObjectInputStream objectInputStream = null;
 
       try {
-          System.out.println("ola14");
-          FileInputStream fileInputStream = new FileInputStream(filename);
-          System.out.println("ola13");
-          objectInputStream = new ObjectInputStream(fileInputStream);
-          System.out.println("ola12");
-          _school = (School) objectInputStream.readObject();
 
-          System.out.println("ola1");
+          FileInputStream fileInputStream = new FileInputStream(filename);
+          objectInputStream = new ObjectInputStream(fileInputStream);
+          _school = (School) objectInputStream.readObject();
           _school.getPerson(_loggedUser.getId());
-          System.out.println("ola2");
 
       }catch (NoSuchPersonIdException e){
           _school = null;
-          System.out.println("ola4");
           throw new NoSuchPersonIdException(_loggedUser.getId());
 
 
       }finally {
           if(objectInputStream != null)
               objectInputStream.close();
-          System.out.println("ola3");
 
       }
   }
@@ -209,6 +202,7 @@ public class SchoolManager {
           DuplicateSurveyException {
 
       try {
+
           if (isLoggedUserRepresentative())
               _school.createSurvey(_loggedUser.getId(), disciplineName, projectName);
 

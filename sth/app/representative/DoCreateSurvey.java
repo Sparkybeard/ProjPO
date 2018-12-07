@@ -15,7 +15,6 @@ import sth.core.exception.NoSuchProjectIdException;
  */
 public class DoCreateSurvey extends sth.app.common.ProjectCommand {
 
-  private Input<String> _discipline;
 
   /**
    * @param receiver
@@ -31,13 +30,13 @@ public class DoCreateSurvey extends sth.app.common.ProjectCommand {
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
 
     try {
-
-      super.execute();
       _receiver.doCreateSurvey(_discipline.value(), _project.value());
     } catch(NoSuchProjectIdException e) {
       throw new NoSuchProjectException(_discipline.value(), _project.value());
     } catch(NoSuchDisciplineIdException e) {
       throw new NoSuchDisciplineException(_discipline.value());
+    } catch (DialogException e) {
+
     }
   }
 }
