@@ -1,8 +1,7 @@
 package sth.core;
 
+import sth.core.exception.*;
 import sth.core.exception.NoSuchDisciplineIdException;
-import sth.core.exception.NoSuchDisciplineIdException;
-import sth.core.exception.NoSuchProjectIdException;
 
 import java.util.Comparator;
 import java.util.ArrayList;
@@ -181,7 +180,8 @@ class Discipline implements java.io.Serializable {
 
 
     boolean createSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchDisciplineIdException{
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException,
+            DuplicateSurveyException {
 
         if(!hasStudent(student))
             throw new NoSuchDisciplineIdException(getName());
@@ -191,7 +191,8 @@ class Discipline implements java.io.Serializable {
 
 
     boolean cancelSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchDisciplineIdException{
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException,
+            NoSurveyIdException, SurveyNonEmptyException, FinishedSurveyException {
 
         if(!hasStudent(student))
             throw new NoSuchDisciplineIdException(getName());
@@ -201,7 +202,8 @@ class Discipline implements java.io.Serializable {
 
 
     boolean openSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException,
+            NoSurveyIdException {
 
         if (!hasStudent(student))
             throw new NoSuchDisciplineIdException(getName());
@@ -211,7 +213,8 @@ class Discipline implements java.io.Serializable {
 
 
     boolean closeSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException,
+            NoSurveyIdException {
 
         if (!hasStudent(student))
             throw new NoSuchDisciplineIdException(getName());
@@ -221,7 +224,8 @@ class Discipline implements java.io.Serializable {
 
 
     boolean finalizeSurvey(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException,
+            NoSurveyIdException {
 
         if (!hasStudent(student))
             throw new NoSuchDisciplineIdException(getName());
@@ -232,7 +236,8 @@ class Discipline implements java.io.Serializable {
 
     boolean fillSurvey(String projectName, Student student,
                        int hours, String comment)
-            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException,
+            NoSurveyIdException {
 
         if (!hasStudent(student))
             throw new NoSuchDisciplineIdException(getName());
@@ -242,7 +247,8 @@ class Discipline implements java.io.Serializable {
 
 
     String showSurveyResults(String projectName, Teacher teacher)
-            throws NoSuchProjectIdException, NoSuchDisciplineIdException{
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException,
+            NoSurveyIdException {
 
         if(!hasTeacher(teacher))
             throw new NoSuchDisciplineIdException(getName());
@@ -252,7 +258,8 @@ class Discipline implements java.io.Serializable {
 
 
     String showSurveyResults(String projectName, Student student)
-            throws NoSuchProjectIdException, NoSuchDisciplineIdException {
+            throws NoSuchProjectIdException, NoSuchDisciplineIdException,
+            NoSurveyIdException {
 
         if(!hasStudent(student))
             throw new NoSuchDisciplineIdException(getName());

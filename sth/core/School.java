@@ -7,10 +7,7 @@ import java.util.stream.Collectors;
 
 
 /* Exceptions Import */
-import sth.core.exception.BadEntryException;
-import sth.core.exception.NoSuchDisciplineIdException;
-import sth.core.exception.NoSuchPersonIdException;
-import sth.core.exception.NoSuchProjectIdException;
+import sth.core.exception.*;
 
 /**
  * Represents the school of the program
@@ -289,7 +286,8 @@ class School implements java.io.Serializable {
 
 
   boolean createSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          DuplicateSurveyException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.createSurvey(disciplineName, projectName);
@@ -297,7 +295,8 @@ class School implements java.io.Serializable {
 
 
   boolean cancelSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyIdException, SurveyNonEmptyException, FinishedSurveyException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.cancelSurvey(disciplineName, projectName);
@@ -305,7 +304,8 @@ class School implements java.io.Serializable {
 
 
   boolean openSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.openSurvey(disciplineName, projectName);
@@ -313,7 +313,8 @@ class School implements java.io.Serializable {
 
 
   boolean closeSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.closeSurvey(disciplineName, projectName);
@@ -321,7 +322,8 @@ class School implements java.io.Serializable {
 
 
   boolean finalizeSurvey(int id, String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.finalizeSurvey(disciplineName, projectName);
@@ -330,7 +332,8 @@ class School implements java.io.Serializable {
 
   boolean fillSurvey(int id, String disciplineName, String projectName,
                      int hours, String comment)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyIdException {
 
       Student student = (Student) _peopleMap.get(id);
       return student.fillSurvey(disciplineName, projectName, hours, comment);
@@ -339,7 +342,8 @@ class School implements java.io.Serializable {
 
   String showSurveyResults(Student student,
                            String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyIdException {
 
       if(_peopleMap.containsKey(student.getId()))
         return student.showSurveyResults(disciplineName, projectName);
@@ -350,7 +354,8 @@ class School implements java.io.Serializable {
 
   String showSurveyResults(Teacher teacher,
                            String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyIdException {
 
       if(_peopleMap.containsKey(teacher.getId()))
           return teacher.showSurveyResults(disciplineName, projectName);

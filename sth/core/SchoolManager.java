@@ -4,12 +4,9 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
-import sth.core.exception.BadEntryException;
-import sth.core.exception.ImportFileException;
-import sth.core.exception.NoSuchPersonIdException;
-import sth.core.exception.NoSuchDisciplineIdException;
-import sth.core.exception.NoSuchProjectIdException;
-
+import sth.app.exception.*;
+import sth.core.exception.*;
+import sth.core.exception.DuplicateSurveyException;
 
 
 /**
@@ -199,83 +196,115 @@ public class SchoolManager {
   }
 
 
-  public boolean doCreateSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+  public void doCreateSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          DuplicateSurveyException {
 
       if(isLoggedUserRepresentative())
-          return _school.createSurvey(_loggedUser.getId(),
-                  disciplineName, projectName);
-
-      return false;
+          if(!_school.createSurvey(_loggedUser.getId(), disciplineName, projectName))
+              throw new DuplicateSurveyException();
   }
 
 
-  public boolean doCancelSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+  public void doCancelSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyException, NonEmptySurveyException, SurveyFinishedException {
 
-      if(isLoggedUserRepresentative())
-          return _school.cancelSurvey(_loggedUser.getId(),
-                  disciplineName, projectName);
+      try {
+          if (isLoggedUserRepresentative())
+              _school.cancelSurvey(_loggedUser.getId(), disciplineName, projectName);
 
-      return false;
+      } catch (NoSurveyIdException e) {
+          throw new NoSurveyException(disciplineName, projectName);
+
+      } catch (SurveyNonEmptyException e) {
+          throw new NonEmptySurveyException(disciplineName, projectName);
+
+      } catch (FinishedSurveyException e) {
+          throw new SurveyFinishedException(disciplineName, projectName);
+      }
   }
 
 
-  public boolean doOpenSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+  public void doOpenSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyException, OpeningSurveyException {
 
-      if(isLoggedUserRepresentative())
-          return _school.openSurvey(_loggedUser.getId(),
-                  disciplineName, projectName);
+      try {
+          if (isLoggedUserRepresentative())
+              if(!_school.openSurvey(_loggedUser.getId(), disciplineName, projectName))
+                  throw new OpeningSurveyException(disciplineName, projectName);
 
-      return false;
+      } catch (NoSurveyIdException e) {
+          throw new NoSurveyException(disciplineName, projectName);
+      }
   }
 
 
-  public boolean doCloseSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+  public void doCloseSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyException, ClosingSurveyException {
 
-      if(isLoggedUserRepresentative())
-          return _school.closeSurvey(_loggedUser.getId(),
-                  disciplineName, projectName);
+      try {
+          if (isLoggedUserRepresentative())
+              if(!_school.closeSurvey(_loggedUser.getId(), disciplineName, projectName))
+                  throw new ClosingSurveyException(disciplineName, projectName);
 
-      return false;
+      } catch (NoSurveyIdException e) {
+          throw new NoSurveyException(disciplineName, projectName);
+      }
   }
 
 
-  public boolean doFinishSurvey(String disciplineName, String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+  public void doFinishSurvey(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyException, FinishingSurveyException {
 
-      if(isLoggedUserRepresentative())
-          return _school.finalizeSurvey(_loggedUser.getId(),
-                  disciplineName, projectName);
+      try {
+          if (isLoggedUserRepresentative())
+              if(!_school.finalizeSurvey(_loggedUser.getId(), disciplineName, projectName))
+                  throw new FinishingSurveyException(disciplineName, projectName);
 
-      return false;
+      } catch (NoSurveyIdException e) {
+          throw new NoSurveyException(disciplineName, projectName);
+      }
   }
 
 
-  public boolean doFillSurvey(String disciplineName, String projectName,
+  public void doFillSurvey(String disciplineName, String projectName,
                               int hours, String comment)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyException {
 
-      return _school.fillSurvey(_loggedUser.getId(),
-              disciplineName, projectName, hours, comment);
+      try {
+          _school.fillSurvey(_loggedUser.getId(), disciplineName, projectName, hours, comment);
+
+      } catch (NoSurveyIdException e) {
+          throw new NoSurveyException(disciplineName, projectName);
+      }
   }
 
 
   public String doShowSurveyResults(String disciplineName,
                                     String projectName)
-          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException,
+          NoSurveyException {
 
-      if(isLoggedUserStudent())
-          return _school.showSurveyResults((Student) _loggedUser,
-                  disciplineName, projectName);
+      try {
 
-      if(isLoggedUserProfessor())
-          return _school.showSurveyResults((Teacher) _loggedUser,
-                  disciplineName, projectName);
+          if (isLoggedUserStudent())
+              return _school.showSurveyResults((Student) _loggedUser,
+                      disciplineName, projectName);
 
-      else return null;
+          if (isLoggedUserProfessor())
+              return _school.showSurveyResults((Teacher) _loggedUser,
+                      disciplineName, projectName);
+
+          else return null;
+
+      } catch (NoSurveyIdException e) {
+          throw new NoSurveyException(disciplineName, projectName);
+      }
   }
 
 

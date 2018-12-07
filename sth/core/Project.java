@@ -4,8 +4,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import sth.core.exception.DuplicateSurveyException;
+import sth.core.exception.FinishedSurveyException;
+import sth.core.exception.NoSurveyIdException;
+import sth.core.exception.SurveyNonEmptyException;
+
 
 public class Project implements java.io.Serializable {
+
     /** Serial number for serialization. */
     private static final long serialVersionUID = 201810051538L;
 
@@ -25,21 +31,8 @@ public class Project implements java.io.Serializable {
     }
 
 
-    Project(String name, String discription){
-        _name = name;
-        _closed = false;
-        _discription = discription;
-        _submissions = new ArrayList<>();
-    }
-
-
     public String getName() {
         return _name;
-    }
-
-
-    void setDiscription(String discription){
-        _discription = discription;
     }
 
 
@@ -85,68 +78,77 @@ public class Project implements java.io.Serializable {
     }
 
 
-    boolean createSurvey() {
+    boolean createSurvey() throws DuplicateSurveyException {
         if(_survey != null)
-            return false;
+            throw new DuplicateSurveyException();
 
         _survey = new Survey(getStudentList());
         return true;
     }
 
 
-    boolean cancelSurvey() {
-        if(_survey.cancelSurvey()){
-            _survey = null;
-            return true;
-        }
+    boolean cancelSurvey() throws NoSurveyIdException,
+            SurveyNonEmptyException, FinishedSurveyException {
 
-        return false;
+        if(_survey == null)
+            throw new NoSurveyIdException();
+
+        return _survey.cancelSurvey();
     }
 
 
-    boolean openSurvey() {
+    boolean openSurvey() throws NoSurveyIdException {
         if(_survey == null)
-            return false;
+            throw new NoSurveyIdException();
 
         return _survey.openSurvey();
     }
 
 
-    boolean closeSurvey() {
+    boolean closeSurvey() throws NoSurveyIdException {
         if(_survey == null)
-            return false;
+            throw new NoSurveyIdException();
 
         return _survey.closeSurvey();
     }
 
 
-    boolean finalizeSurvey() {
+    boolean finalizeSurvey() throws NoSurveyIdException {
         if(_survey == null)
-            return false;
+            throw new NoSurveyIdException();
 
         return _survey.finalizeSurvey();
     }
 
 
-    boolean fillSurvey(Student student, int hours, String comment) {
+    boolean fillSurvey(Student student, int hours, String comment) throws NoSurveyIdException {
         if(_survey == null)
-            return false;
+            throw new NoSurveyIdException();
 
         return _survey.fillSurvey(student, hours, comment);
     }
 
 
-    String showSurveyResults(String disciplineName) {
+    String showSurveyResults(String disciplineName) throws NoSurveyIdException {
+        if(_survey == null)
+            throw new NoSurveyIdException();
+
         return _survey.showSurveyResults(disciplineName, getName());
     }
 
 
-    String showPersonResults(String disciplineName, Student student) {
+    String showPersonResults(String disciplineName, Student student) throws NoSurveyIdException {
+        if(_survey == null)
+            throw new NoSurveyIdException();
+
         return _survey.personResults(student, disciplineName, getName());
     }
 
 
     String representativeResults(String disciplineName) {
+        if(_survey == null)
+            return "";
+
         return _survey.representativeResults(disciplineName, getName());
     }
 }

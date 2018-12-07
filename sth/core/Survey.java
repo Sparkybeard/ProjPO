@@ -1,5 +1,8 @@
 package sth.core;
 
+import sth.core.exception.FinishedSurveyException;
+import sth.core.exception.SurveyNonEmptyException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,12 +19,7 @@ class Survey {
         _state = new CreatedSurvey(this);
         _answers = new ArrayList<>();
         _surveydList = new ArrayList<>();
-        _submittedList = new ArrayList<>(submittedList);
-    }
-
-
-    String getSurveyState() {
-        return _state.getStateName();
+        _submittedList = submittedList;
     }
 
 
@@ -125,7 +123,8 @@ class Survey {
         _state = state;
     }
 
-    boolean cancelSurvey() {
+    boolean cancelSurvey()
+            throws SurveyNonEmptyException, FinishedSurveyException{
         return _state.cancelSurvey();
     }
 
@@ -177,7 +176,8 @@ abstract class SurveyState{
         return _stateName;
     }
 
-    abstract boolean cancelSurvey();
+    abstract boolean cancelSurvey()
+            throws SurveyNonEmptyException, FinishedSurveyException;
     abstract boolean openSurvey();
     abstract boolean closeSurvey();
     abstract boolean finalizeSurvey();
@@ -186,7 +186,7 @@ abstract class SurveyState{
     abstract String studentResults(Student student,
                                    String disciplineName, String projectName);
 
-    abstract String showSurveyResults(String displineName, String projectName);
+    abstract String showSurveyResults(String disciplineName, String projectName);
 
     abstract String representativeResults(String disciplineName,
                                           String projectName);
@@ -202,8 +202,11 @@ class CreatedSurvey extends SurveyState {
 
 
     @Override
-    boolean cancelSurvey() {
-        return _survey.noAnswers();
+    boolean cancelSurvey() throws SurveyNonEmptyException {
+        if(!_survey.noAnswers())
+            throw new SurveyNonEmptyException();
+
+        return true;
     }
 
 
@@ -262,8 +265,11 @@ class OpenSurvey extends SurveyState {
 
 
     @Override
-    boolean cancelSurvey() {
-        return _survey.noAnswers();
+    boolean cancelSurvey() throws SurveyNonEmptyException {
+        if(!_survey.noAnswers())
+            throw new SurveyNonEmptyException();
+
+        return true;
     }
 
 
@@ -388,8 +394,8 @@ class FinalizedSurvey extends SurveyState {
 
 
     @Override
-    boolean cancelSurvey() {
-        return false;
+    boolean cancelSurvey() throws FinishedSurveyException {
+        throw new FinishedSurveyException();
     }
 
 
