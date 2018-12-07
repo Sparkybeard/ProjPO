@@ -31,7 +31,7 @@ public class DoAnswerSurvey extends sth.app.common.ProjectCommand {
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
 
     try {
-      super.execute();
+      _form.parse();
 
 
       _receiver.doFillSurvey(_discipline.value(), _project.value(), _hours.value(), _comment.value());

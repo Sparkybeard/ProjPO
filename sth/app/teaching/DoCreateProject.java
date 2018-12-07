@@ -26,7 +26,7 @@ public class DoCreateProject extends ProjectCommand {
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineException, DuplicateProjectException {
     try {
-       if(_receiver.doCreateProject(_project.value(), _discipline.value()) == false ) {
+       if(!_receiver.doCreateProject(_project.value(), _discipline.value())) {
          throw new DuplicateProjectException(_discipline.value(), _project.value());
        }
     } catch(NoSuchDisciplineIdException e) {

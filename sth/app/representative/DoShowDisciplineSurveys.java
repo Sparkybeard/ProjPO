@@ -3,18 +3,16 @@ package sth.app.representative;
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
+import sth.app.exception.NoSuchDisciplineException;
 import sth.core.SchoolManager;
 import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.NoSuchPersonIdException;
-
-//FIXME import other classes if needed
 
 /**
  * 4.6.6. Show discipline surveys.
  */
 public class DoShowDisciplineSurveys extends Command<SchoolManager> {
 
-  //FIXME add input fields if needed
   private Input<String> _discipline;
   /**
    * @param receiver
@@ -30,10 +28,8 @@ public class DoShowDisciplineSurveys extends Command<SchoolManager> {
     _form.parse();
     try {
       _receiver.doShowDisciplineSurveys(_discipline.value());
-
-
     } catch (NoSuchDisciplineIdException e) {
-
+      throw new NoSuchDisciplineException(_discipline.value());
     }
   }
 
