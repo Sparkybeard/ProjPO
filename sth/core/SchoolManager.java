@@ -178,10 +178,24 @@ public class SchoolManager {
   }
 
 
-  public boolean doCreateProject(String projName, String disciplineName)
+  public boolean doCreateProject(String projectName, String disciplineName)
           throws NoSuchDisciplineIdException{
 
-      return _school.createProject(projName, disciplineName, _loggedUser.getId());
+      return _school.createProject(projectName, disciplineName, _loggedUser.getId());
+  }
+
+
+  public String doShowProjectSubmissions(String disciplineName, String projectName)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+
+      return _school.seeSubmissions(_loggedUser.getId(), disciplineName, projectName);
+  }
+
+
+  public void doDeliverProject(String disciplineName, String projectName, String message)
+          throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+
+      _school.addSubmission(_loggedUser.getId(), disciplineName, projectName, message);
   }
 
 
@@ -272,12 +286,8 @@ public class SchoolManager {
               disciplineName);
   }
 
-  public String doShowProjectSubmissions(String projectName) {
-      String a = "ola";
-      return a;
-  }
 
-  public void doDeliverProject(String projectName) {
-
+  public List<String> getNotifications() {
+      return _school.getNotifications(_loggedUser.getId());
   }
 }

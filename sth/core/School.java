@@ -366,4 +366,9 @@ class School implements java.io.Serializable {
       Student student = (Student) _peopleMap.get(id);
       return student.showDisciplineSurveys(disciplineName);
   }
+
+
+  List<String> getNotifications(int id) {
+      return _peopleMap.get(id).getNotifications();
+  }
 }
