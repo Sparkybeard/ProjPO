@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 
 class Survey {
-    private SurveyState _state; //FIXME enum
+    private SurveyState _state;
     private List<Answer> _answers;
     private List<Integer> _surveydList;
     private List<Integer> _submittedList;
@@ -197,7 +197,7 @@ class CreatedSurvey extends SurveyState {
 
     CreatedSurvey(Survey survey) {
         super(survey);
-        setStateName("created");
+        setStateName("por abrir");
     }
 
 
@@ -257,7 +257,7 @@ class OpenSurvey extends SurveyState {
 
     OpenSurvey(Survey survey) {
         super(survey);
-        setStateName("open");
+        setStateName("aberto");
     }
 
 
@@ -322,7 +322,7 @@ class ClosedSurvey extends SurveyState{
 
     ClosedSurvey(Survey survey) {
         super(survey);
-        setStateName("closed");
+        setStateName("fechado");
     }
 
     @Override
@@ -383,7 +383,7 @@ class FinalizedSurvey extends SurveyState {
 
     FinalizedSurvey(Survey survey) {
         super(survey);
-        setStateName("finalized");
+        setStateName("finalizado");
     }
 
 

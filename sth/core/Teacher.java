@@ -186,4 +186,15 @@ class Teacher extends Person {
         Discipline discipline = getDiscipline(disciplineName);
         return discipline.showSurveyResults(projectName, this);
     }
+
+    //FIXME falta acentos
+    @Override
+    String getMessage(String message, String disciplineName, String projectName){
+        if(message.equals("finalizado")) {
+            return "Resultados do inquerito do projeto " + projectName
+                    + " da disciplina " + disciplineName;
+        }
+
+        else return null;
+    }
 }

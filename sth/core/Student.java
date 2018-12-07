@@ -147,6 +147,10 @@ class Student extends Person {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
+
+            Notification notification = getNotification(disciplineName, projectName);
+            notification.setState("por abrir");
+
             return discipline.createSurvey(projectName, this);
         }
 
@@ -171,6 +175,11 @@ class Student extends Person {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
+
+            Notification notification = getNotification(disciplineName, projectName);
+            notification.setState("aberto");
+            notification.notifyObservers();
+
             return discipline.openSurvey(projectName, this);
         }
 
@@ -183,6 +192,10 @@ class Student extends Person {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
+
+            Notification notification = getNotification(disciplineName, projectName);
+            notification.setState("fechado");
+
             return discipline.closeSurvey(projectName, this);
         }
 
@@ -195,6 +208,11 @@ class Student extends Person {
 
         if(_isRepresentative){
             Discipline discipline = getDiscipline(disciplineName);
+
+            Notification notification = getNotification(disciplineName, projectName);
+            notification.setState("finalizado");
+            notification.notifyObservers();
+
             return discipline.finalizeSurvey(projectName, this);
         }
 
@@ -225,5 +243,23 @@ class Student extends Person {
         }
 
         return null;
+    }
+
+
+    //FIXME falta acentos
+    @Override
+    String getMessage(String message, String disciplineName, String projectName){
+        if(message.equals("aberto")) {
+            return "Pode preencher inquerito do projeto " + projectName
+                    + " da disciplina " + disciplineName;
+        }
+
+
+        if(message.equals("finalizado")) {
+            return "Resultados do inquerito do projeto " + projectName
+                    + " da disciplina " + disciplineName;
+        }
+
+        else return null;
     }
 }

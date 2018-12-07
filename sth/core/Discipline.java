@@ -100,6 +100,30 @@ class Discipline implements java.io.Serializable {
     }
 
 
+    private void addNotificationTeachers(String projectName) {
+        Iterator<Teacher> iterator = _teacherList.iterator();
+
+        while(iterator.hasNext()) {
+            iterator.next().addNotification(getName(), projectName);
+        }
+    }
+
+
+    private void addNotificationStudents(String projectName) {
+        Iterator<Student> iterator = _studentList.iterator();
+
+        while(iterator.hasNext()) {
+            iterator.next().addNotification(getName(), projectName);
+        }
+    }
+
+
+    private void addNotifications(String projectName){
+        addNotificationTeachers(projectName);
+        addNotificationStudents(projectName);
+    }
+
+
     /**
      *
      * @param projectName name of the project to create
@@ -118,6 +142,7 @@ class Discipline implements java.io.Serializable {
 
         project = new Project(projectName);
         _projectList.add(project);
+        addNotifications(projectName);
         return true;
     }
 

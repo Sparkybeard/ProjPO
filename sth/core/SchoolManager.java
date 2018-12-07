@@ -1,8 +1,6 @@
 package sth.core;
 
 import java.io.*;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -11,8 +9,7 @@ import sth.core.exception.ImportFileException;
 import sth.core.exception.NoSuchPersonIdException;
 import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.NoSuchProjectIdException;
-import sth.core.Person;
-import sth.core.School;
+
 
 
 /**
@@ -49,7 +46,7 @@ public class SchoolManager {
    * Do the login of the user with the given identifier.
    *
    * @param id identifier of the user to login
-   * @throw if there are no users with the given identifier
+   * @throws NoSuchPersonIdException if there are no users with the given identifier
    */
   public void login(int id) throws NoSuchPersonIdException {
     _loggedUser = _school.getPerson(id);
@@ -232,7 +229,7 @@ public class SchoolManager {
   }
 
 
-  public boolean doFinalizeSurvey(String disciplineName, String projectName)
+  public boolean doFinishSurvey(String disciplineName, String projectName)
           throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 
       if(isLoggedUserRepresentative())

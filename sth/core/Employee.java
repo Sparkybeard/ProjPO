@@ -15,4 +15,9 @@ class Employee extends Person {
     String getInformation() {
         return toString();
     }
+
+    @Override
+    String getMessage(String message, String disciplineName, String projectName){
+        return null;
+    }
 }
