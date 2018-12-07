@@ -2,6 +2,7 @@ package sth.app.student;
 
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
+import sth.app.exception.NoSuchProjectException;
 import sth.core.SchoolManager;
 
 import sth.core.exception.NoSuchDisciplineIdException;
@@ -23,17 +24,20 @@ public class DoShowSurveyResults extends sth.app.common.ProjectCommand {
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
-  public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, NoSurveyException {
+  public final void myExecute() throws NoSuchProjectException, NoSuchDisciplineIdException, NoSurveyException {
     try {
       super.execute();
       _display.addLine(_receiver.doShowSurveyResults(_discipline.value(), _project.value()));
     } catch(NoSuchProjectIdException e){
+        throw new NoSuchProjectException(_discipline.value(), _project.value());
 
     } catch(NoSuchDisciplineIdException e) {
 
     } catch(NoSurveyException e) {
 
-    } catch(N)
+    } catch(DialogException e) {
+
+    }
   }
 
 }

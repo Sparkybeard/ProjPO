@@ -2,6 +2,8 @@ package sth.app.representative;
 
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
+import sth.app.exception.NoSuchDisciplineException;
+import sth.app.exception.NoSuchProjectException;
 import sth.core.SchoolManager;
 
 //FIXME import other classes if needed
@@ -26,11 +28,14 @@ public class DoFinishSurvey extends sth.app.common.ProjectCommand {
   /** @see sth.app.common.ProjectCommand#myExecute() */ 
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    super.execute();
-
+    try {
+      super.execute();
       _receiver.doFinishSurvey(_discipline.value(), _project.value());
-
-
+    } catch(NoSuchDisciplineIdException e) {
+      throw new NoSuchProjectException(_discipline.value(), _project.value());
+    } catch(NoSuchProjectIdException e) {
+      throw new NoSuchDisciplineException(_discipline.value());
     }
   }
+}
 

@@ -2,6 +2,8 @@ package sth.app.representative;
 
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
+import sth.app.exception.NoSuchDisciplineException;
+import sth.app.exception.NoSuchProjectException;
 import sth.core.SchoolManager;
 
 import sth.core.exception.NoSuchDisciplineIdException;
@@ -18,15 +20,20 @@ public class DoCancelSurvey extends sth.app.common.ProjectCommand {
    */
   public DoCancelSurvey(SchoolManager receiver) {
     super(Label.CANCEL_SURVEY, receiver);
-    //FIXME initialize input fields if needed
   }
 
   /** @see sth.app.common.ProjectCommand#myExecute() */
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
-    super.execute();
 
+    try {
+      super.execute();
       _receiver.doCancelSurvey(_discipline.value(), _project.value());
+    } catch(NoSuchDisciplineIdException e) {
+      throw new NoSuchDisciplineException(_discipline.value());
 
+    } catch(NoSuchProjectIdException e) {
+      throw new NoSuchProjectException(_discipline.value(), _project.value());
+    }
   }
 }
