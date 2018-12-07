@@ -127,29 +127,27 @@ public class SchoolManager {
   }
 
 
-  public void doOpen(String filename)
-          throws IOException, ClassNotFoundException, NoSuchPersonIdException {
+    public void doOpen(String filename)
+            throws IOException, ClassNotFoundException, NoSuchPersonIdException {
 
-      ObjectInputStream objectInputStream = null;
+        ObjectInputStream objectInputStream = null;
 
-      try {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            _school = (School) objectInputStream.readObject();
 
-          FileInputStream fileInputStream = new FileInputStream(filename);
-          objectInputStream = new ObjectInputStream(fileInputStream);
-          _school = (School) objectInputStream.readObject();
-          _school.getPerson(_loggedUser.getId());
+            _school.getPerson(_loggedUser.getId());
 
-      }catch (NoSuchPersonIdException e){
-          _school = null;
-          throw new NoSuchPersonIdException(_loggedUser.getId());
+        }catch (NoSuchPersonIdException e){
+            _school = null;
+            throw new NoSuchPersonIdException(_loggedUser.getId());
 
-
-      }finally {
-          if(objectInputStream != null)
-              objectInputStream.close();
-
-      }
-  }
+        }finally {
+            if(objectInputStream != null)
+                objectInputStream.close();
+        }
+    }
 
 
   public String showPerson(){
@@ -202,7 +200,6 @@ public class SchoolManager {
           DuplicateSurveyException {
 
       try {
-
           if (isLoggedUserRepresentative())
               _school.createSurvey(_loggedUser.getId(), disciplineName, projectName);
 

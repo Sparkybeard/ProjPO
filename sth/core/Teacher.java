@@ -93,6 +93,10 @@ class Teacher extends Person {
 
             while (iterator.hasNext()) {
                 course = iterator.next().getCourse();
+
+                if(courseList.contains(course))
+                    continue;
+
                 courseList.add(course);
             }
 
@@ -106,7 +110,7 @@ class Teacher extends Person {
 
 
     private String getCourseInformation(Course course){
-        StringBuilder courseInformation = new StringBuilder(course.toString());
+        StringBuilder courseInformation = new StringBuilder();
         Iterator<Discipline> iterator = _disciplines.iterator();
         Discipline discipline;
 
@@ -114,10 +118,11 @@ class Teacher extends Person {
             discipline = iterator.next();
 
             if(course.hasDiscipline(discipline)){
+                courseInformation.append("* ");
                 courseInformation.append(course.getName());
                 courseInformation.append(" - ");
                 courseInformation.append(discipline.getName());
-
+                courseInformation.append("\n");
             }
         }
 
